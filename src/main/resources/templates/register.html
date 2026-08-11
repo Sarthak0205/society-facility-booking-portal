@@ -1,104 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Society Facility Booking Portal</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+    <title>Create Account - Society Facility Booking Portal</title>
+
+    <link rel="stylesheet"
+          href="/css/register.css">
 </head>
 
 <body>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
+<div class="register-card">
 
-        <div class="col-md-6">
+    <!-- Logo -->
+    <div class="logo">
+        🏢
+    </div>
 
-            <div class="card shadow">
-                <div class="card-body">
+    <!-- Heading -->
+    <h1 class="title">
+        Society Facility<br>
+        Booking Portal
+    </h1>
 
-                    <h2 class="text-center mb-4">
-                        Society Facility Booking Portal
-                    </h2>
+    <p class="subtitle">
+        Create your resident account
+    </p>
 
-                    <h4 class="mb-3">Create Account</h4>
+    <!-- Success Message -->
+    <div th:if="${success}"
+         class="alert alert-success"
+         th:text="${success}">
+    </div>
 
-                    <div th:if="${success}"
-                         class="alert alert-success"
-                         th:text="${success}">
-                    </div>
+    <!-- Error Message -->
+    <div th:if="${error}"
+         class="alert alert-danger"
+         th:text="${error}">
+    </div>
 
-                    <div th:if="${error}"
-                         class="alert alert-danger"
-                         th:text="${error}">
-                    </div>
+    <!-- Registration Form -->
+    <form action="/users/register"
+          method="post">
 
-                    <form action="/users/register" method="post">
+        <!-- Full Name -->
+        <div class="form-group">
+            <div class="input-wrapper">
 
-                        <div class="mb-3">
-                            <label for="fullName" class="form-label">
-                                Full Name
-                            </label>
+                <span class="input-icon">👤</span>
 
-                            <input type="text"
-                                   class="form-control"
-                                   id="fullName"
-                                   name="fullName"
-                                   required>
-                        </div>
+                <input type="text"
+                       class="form-control"
+                       name="fullName"
+                       placeholder="Full Name"
+                       required>
 
-                        <div class="mb-3">
-                            <label for="email" class="form-label">
-                                Email
-                            </label>
-
-                            <input type="email"
-                                   class="form-control"
-                                   id="email"
-                                   name="email"
-                                   required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="password" class="form-label">
-                                Password
-                            </label>
-
-                            <input type="password"
-                                   class="form-control"
-                                   id="password"
-                                   name="password"
-                                   minlength="6"
-                                   required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">
-                                Confirm Password
-                            </label>
-
-                            <input type="password"
-                                   class="form-control"
-                                   id="confirmPassword"
-                                   name="confirmPassword"
-                                   required>
-                        </div>
-
-                        <button type="submit"
-                                class="btn btn-primary w-100">
-                            Register
-                        </button>
-
-                    </form>
-
-                </div>
             </div>
-
         </div>
 
+        <!-- Email -->
+        <div class="form-group">
+            <div class="input-wrapper">
+
+                <span class="input-icon">✉</span>
+
+                <input type="email"
+                       class="form-control"
+                       name="email"
+                       placeholder="Email Address"
+                       required>
+
+            </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <div class="input-wrapper">
+
+                <span class="input-icon">🔒</span>
+
+                <input type="password"
+                       class="form-control"
+                       name="password"
+                       placeholder="Password"
+                       minlength="6"
+                       required>
+
+            </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+            <div class="input-wrapper">
+
+                <span class="input-icon">🛡</span>
+
+                <input type="password"
+                       class="form-control"
+                       name="confirmPassword"
+                       placeholder="Confirm Password"
+                       required>
+
+            </div>
+        </div>
+
+        <!-- Register Button -->
+        <button type="submit"
+                class="register-btn">
+            👤+ Register
+        </button>
+
+    </form>
+
+    <!-- Sign In -->
+    <div class="divider">
+        <span>Already have an account?</span>
     </div>
+
+    <p class="signin-text">
+        Sign in to continue
+    </p>
+
+    <a href="#"
+       class="signin-link">
+        Sign In
+    </a>
+
 </div>
 
 </body>
