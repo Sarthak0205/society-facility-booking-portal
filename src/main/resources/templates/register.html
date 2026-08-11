@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account - Society Facility Booking Portal</title>
+
+    <link rel="stylesheet"
+          href="/css/register.css">
+</head>
+
+<body>
+
+<div class="register-card">
+
+    <!-- Logo -->
+    <div class="logo">
+        🏢
+    </div>
+
+    <!-- Heading -->
+    <h1 class="title">
+        Society Facility<br>
+        Booking Portal
+    </h1>
+
+    <p class="subtitle">
+        Create your resident account
+    </p>
+
+    <!-- Success Message -->
+    <div th:if="${success}"
+         class="alert alert-success"
+         th:text="${success}">
+    </div>
+
+    <!-- Error Message -->
+    <div th:if="${error}"
+         class="alert alert-danger"
+         th:text="${error}">
+    </div>
+
+    <!-- Registration Form -->
+    <form action="/users/register"
+          method="post">
+
+        <!-- Full Name -->
+        <div class="form-group">
+            <div class="input-wrapper">
+
+                <span class="input-icon">👤</span>
+
+                <input type="text"
+                       class="form-control"
+                       name="fullName"
+                       placeholder="Full Name"
+                       required>
+
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <div class="input-wrapper">
+
+                <span class="input-icon">✉</span>
+
+                <input type="email"
+                       class="form-control"
+                       name="email"
+                       placeholder="Email Address"
+                       required>
+
+            </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <div class="input-wrapper">
+
+                <span class="input-icon">🔒</span>
+
+                <input type="password"
+                       class="form-control"
+                       name="password"
+                       placeholder="Password"
+                       minlength="6"
+                       required>
+
+            </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+            <div class="input-wrapper">
+
+                <span class="input-icon">🛡</span>
+
+                <input type="password"
+                       class="form-control"
+                       name="confirmPassword"
+                       placeholder="Confirm Password"
+                       required>
+
+            </div>
+        </div>
+
+        <!-- Register Button -->
+        <button type="submit"
+                class="register-btn">
+            👤+ Register
+        </button>
+
+    </form>
+
+    <!-- Sign In -->
+    <div class="divider">
+        <span>Already have an account?</span>
+    </div>
+
+    <p class="signin-text">
+        Sign in to continue
+    </p>
+
+    <a href="#"
+       class="signin-link">
+        Sign In
+    </a>
+
+</div>
+
+</body>
+</html>
