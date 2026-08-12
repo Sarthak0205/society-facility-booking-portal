@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Facilities - Society Facility Booking Portal</title>
+
+  <link rel="stylesheet" href="/css/facilities.css">
+</head>
+
+<body>
+
+<div class="facilities-container">
+
+  <div class="logo">
+    🏢
+  </div>
+
+  <h1 class="title">
+    Available Facilities
+  </h1>
+
+  <p class="subtitle">
+    Choose a facility for your booking
+  </p>
+
+  <div th:if="${facilities.isEmpty()}"
+       class="empty-message">
+    No facilities are currently available.
+  </div>
+
+  <div th:unless="${facilities.isEmpty()}"
+       class="facility-list">
+
+    <div th:each="facility : ${facilities}"
+         class="facility-card">
+
+      <h2 class="facility-name"
+          th:text="${facility.facilityName}">
+        Facility Name
+      </h2>
+
+      <p class="facility-description"
+         th:text="${facility.description}">
+        Facility Description
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="divider">
+    <span>Society Facilities</span>
+  </div>
+
+  <a href="/users/login"
+     class="back-link">
+    Back to Login
+  </a>
+
+</div>
+
+</body>
+</html>
