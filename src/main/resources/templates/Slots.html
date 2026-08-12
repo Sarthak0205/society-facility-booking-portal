@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Available Slots - Society Facility Booking Portal</title>
+
+  <link rel="stylesheet" href="/css/slots.css">
+</head>
+
+<body>
+
+<div class="slots-container">
+
+  <div class="logo">
+    🕐
+  </div>
+
+  <h1 class="title">
+    Available Slots
+  </h1>
+
+  <p class="subtitle">
+    Select an available time slot
+  </p>
+
+  <div class="selected-date"
+       th:text="'Date: ' + ${selectedDate}">
+    Date
+  </div>
+
+  <div th:if="${slots.isEmpty()}"
+       class="empty-message">
+    No available slots for this date.
+  </div>
+
+  <div th:unless="${slots.isEmpty()}"
+       class="slot-list">
+
+    <div th:each="slot : ${slots}"
+         class="slot-card">
+
+      <div class="slot-time"
+           th:text="${slot.startTime} + ' - ' + ${slot.endTime}">
+        09:00 - 10:00
+      </div>
+
+      <div class="slot-status">
+        Available
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="divider">
+    <span>Available Time Slots</span>
+  </div>
+
+  <a href="/facilities"
+     class="back-link">
+    Back to Facilities
+  </a>
+
+</div>
+
+</body>
+</html>
