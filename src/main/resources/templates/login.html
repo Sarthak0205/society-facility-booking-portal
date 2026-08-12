@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign In - Society Facility Booking Portal</title>
+
+    <link rel="stylesheet"
+          href="/css/register.css">
+</head>
+
+<body>
+
+<div class="register-card">
+
+    <!-- Logo -->
+    <div class="logo">
+        🏢
+    </div>
+
+    <!-- Heading -->
+    <h1 class="title">
+        Welcome Back
+    </h1>
+
+    <p class="subtitle">
+        Sign in to your resident account
+    </p>
+
+    <!-- Success Message -->
+    <div th:if="${success}"
+         class="alert alert-success"
+         th:text="${success}">
+    </div>
+
+    <!-- Error Message -->
+    <div th:if="${error}"
+         class="alert alert-danger"
+         th:text="${error}">
+    </div>
+
+    <!-- Login Form -->
+    <form action="/users/login"
+          method="post">
+
+        <!-- Email -->
+        <div class="form-group">
+            <div class="input-wrapper">
+
+                <span class="input-icon">✉</span>
+
+                <input type="email"
+                       class="form-control"
+                       name="email"
+                       placeholder="Email Address"
+                       required>
+
+            </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <div class="input-wrapper">
+
+                <span class="input-icon">🔒</span>
+
+                <input type="password"
+                       class="form-control"
+                       name="password"
+                       placeholder="Password"
+                       required>
+
+            </div>
+        </div>
+
+        <!-- Login Button -->
+        <button type="submit"
+                class="register-btn">
+            Sign In
+        </button>
+
+    </form>
+
+    <!-- Registration Link -->
+    <div class="divider">
+        <span>Don't have an account?</span>
+    </div>
+
+    <p class="signin-text">
+        Create your resident account
+    </p>
+
+    <a href="/users/register"
+       class="signin-link">
+        Register
+    </a>
+
+</div>
+
+</body>
+</html>

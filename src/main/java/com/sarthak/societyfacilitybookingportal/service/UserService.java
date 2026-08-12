@@ -52,4 +52,19 @@ public class UserService {
 
         return "Registration successful!";
     }
+
+    public String loginUser(String email, String password) {
+
+        if (email == null || email.isBlank()) {
+            return "Email is required.";
+        }
+
+        if (password == null || password.isBlank()) {
+            return "Password is required.";
+        }
+
+        return userRepository.findByEmailAndPassword(email, password)
+                .map(user -> "Login successful!")
+                .orElse("Invalid email or password.");
+    }
 }
