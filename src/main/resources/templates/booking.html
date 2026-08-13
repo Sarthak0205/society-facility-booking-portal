@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Book Facility - Society Facility Booking Portal</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f2f7ff;
+      font-family: Arial, sans-serif;
+    }
+
+    .booking-container {
+      width: min(600px, calc(100% - 32px));
+      margin: 40px auto;
+      padding: 35px;
+      background: #ffffff;
+      border-radius: 24px;
+      box-sizing: border-box;
+    }
+
+    .logo {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #2864e8;
+      border-radius: 20px;
+      font-size: 34px;
+    }
+
+    h1 {
+      margin: 0;
+      text-align: center;
+      color: #20242a;
+    }
+
+    .subtitle {
+      margin: 8px 0 25px;
+      text-align: center;
+      color: #737c8d;
+    }
+
+    .booking-details {
+      padding: 18px;
+      border: 1px solid #d9dfe8;
+      border-radius: 14px;
+      background: #f8fbff;
+    }
+
+    .booking-details p {
+      margin: 8px 0;
+      color: #20242a;
+    }
+
+    .booking-details strong {
+      color: #2864e8;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 7px;
+      color: #20242a;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d9dfe8;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 13px;
+      border: none;
+      border-radius: 10px;
+      background: #1769ff;
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0f5be0;
+    }
+
+    .error {
+      margin-bottom: 18px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #fde8e8;
+      color: #8b1e1e;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="booking-container">
+
+  <div class="logo">
+    📅
+  </div>
+
+  <h1>Book Facility</h1>
+
+  <p class="subtitle">
+    Confirm your booking details
+  </p>
+
+  <div th:if="${error}"
+       class="error"
+       th:text="${error}">
+    Booking error
+  </div>
+
+  <div class="booking-details">
+
+    <p>
+      <strong>Facility:</strong>
+      <span th:text="${slot.facility.facilityName}">
+                Community Hall
+            </span>
+    </p>
+
+    <p>
+      <strong>Date:</strong>
+      <span th:text="${slot.slotDate}">
+                2026-08-14
+            </span>
+    </p>
+
+    <p>
+      <strong>Time:</strong>
+      <span th:text="${slot.startTime} + ' - ' + ${slot.endTime}">
+                09:00 - 10:00
+            </span>
+    </p>
+
+  </div>
+
+  <form th:action="@{/booking(slotId=${slot.slotId})}" method="post">
+
+    <input type="hidden"
+           name="slotId"
+           th:value="${slot.slotId}">
+
+    <label for="userId">
+      User ID
+    </label>
+
+    <input type="number"
+           id="userId"
+           name="userId"
+           min="1"
+           required>
+
+    <button type="submit">
+      Submit Booking
+    </button>
+
+  </form>
+
+</div>
+
+</body>
+</html>
