@@ -1,0 +1,324 @@
+/* =========================================
+   SocietyHub — Booking
+   ========================================= */
+
+.booking-page {
+    max-width: 900px;
+}
+
+/* Back link */
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 28px;
+
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: color 0.15s ease;
+}
+
+.back-link:hover {
+    color: var(--primary);
+}
+
+/* Header */
+
+.booking-header {
+    max-width: 700px;
+    margin-bottom: 30px;
+}
+
+.booking-header .page-title {
+    margin-bottom: 8px;
+}
+
+/* User */
+
+.booking-user {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.booking-avatar {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--primary-light);
+    color: var(--primary-dark);
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+/* Error */
+
+.booking-error {
+    margin-bottom: 20px;
+    padding: 14px 16px;
+
+    border: 1px solid #f3c4c4;
+    border-radius: 12px;
+
+    background: #fff1f1;
+    color: #a52a2a;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Booking summary */
+
+.booking-summary {
+    display: flex;
+    gap: 20px;
+
+    padding: 24px;
+
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.summary-icon {
+    width: 56px;
+    height: 56px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 16px;
+
+    background: var(--primary-light);
+
+    font-size: 27px;
+}
+
+.summary-content {
+    flex: 1;
+}
+
+.summary-label {
+    margin: 0 0 5px;
+
+    color: var(--primary);
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.1px;
+}
+
+.summary-content h2 {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: 21px;
+    line-height: 1.3;
+}
+
+.summary-details {
+    display: flex;
+    gap: 38px;
+
+    margin-top: 22px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.detail-icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: var(--primary-light);
+    color: var(--primary);
+
+    font-size: 17px;
+}
+
+.detail-item > div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.detail-label {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.detail-item strong {
+    color: var(--text);
+    font-size: 14px;
+}
+
+/* Form card */
+
+.booking-form-card {
+    margin-top: 20px;
+
+    padding: 26px;
+
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.form-heading {
+    margin-bottom: 22px;
+}
+
+.form-heading h2 {
+    margin: 0 0 5px;
+
+    color: var(--text);
+
+    font-size: 18px;
+}
+
+.form-heading p {
+    margin: 0;
+
+    color: var(--text-muted);
+
+    font-size: 14px;
+}
+
+/* Form */
+
+.booking-form-card label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--text);
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.booking-form-card input {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+
+    background: #fff;
+    color: var(--text);
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+            border-color 0.15s ease,
+            box-shadow 0.15s ease;
+}
+
+.booking-form-card input:focus {
+    border-color: var(--primary);
+
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.booking-form-card input::placeholder {
+    color: var(--text-muted);
+}
+
+/* Button */
+
+.booking-form-card button {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    margin-top: 20px;
+    padding: 13px 18px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: var(--primary);
+    color: #fff;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+            background 0.15s ease,
+            transform 0.15s ease;
+}
+
+.booking-form-card button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.booking-form-card button span {
+    font-size: 18px;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .booking-summary {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .summary-details {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .booking-form-card {
+        padding: 20px;
+    }
+
+    .booking-user span:last-child {
+        display: none;
+    }
+}
