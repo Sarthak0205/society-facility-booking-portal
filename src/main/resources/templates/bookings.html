@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Bookings - Society Facility Booking Portal</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f2f7ff;
+      font-family: Arial, sans-serif;
+    }
+
+    .bookings-container {
+      width: min(700px, calc(100% - 32px));
+      margin: 25px auto;
+      padding: 30px 38px;
+      background: #ffffff;
+      border-radius: 24px;
+      box-sizing: border-box;
+    }
+
+    .logo {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #2864e8;
+      border-radius: 20px;
+      font-size: 34px;
+    }
+
+    h1 {
+      margin: 0;
+      text-align: center;
+      color: #20242a;
+    }
+
+    .subtitle {
+      margin: 8px 0 22px;
+      text-align: center;
+      color: #737c8d;
+    }
+
+    .booking-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .booking-card {
+      padding: 16px;
+      border: 1px solid #d9dfe8;
+      border-radius: 14px;
+      background: #f8fbff;
+    }
+
+    .booking-card p {
+      margin: 7px 0;
+      color: #20242a;
+    }
+
+    .booking-card strong {
+      color: #2864e8;
+    }
+
+    .status {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      background: #fff4d6;
+      color: #8a6500;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .cancel-button {
+      width: 100%;
+      margin-top: 14px;
+      padding: 10px;
+      border: none;
+      border-radius: 9px;
+      background: #dc3545;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .cancel-button:hover {
+      background: #bd2635;
+    }
+
+    .cancelled {
+      background: #e9ecef;
+      color: #6c757d;
+    }
+
+    .empty-message {
+      padding: 15px;
+      border-radius: 10px;
+      background: #f1f6ff;
+      color: #737c8d;
+      text-align: center;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 22px;
+      text-align: center;
+      color: #1769ff;
+      font-size: 17px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="bookings-container">
+
+  <div class="logo">
+    📋
+  </div>
+
+  <h1>My Bookings</h1>
+
+  <p class="subtitle">
+    View and manage your facility bookings
+  </p>
+
+  <div th:if="${bookings.isEmpty()}"
+       class="empty-message">
+    You have no bookings.
+  </div>
+
+  <div th:unless="${bookings.isEmpty()}"
+       class="booking-list">
+
+    <div th:each="booking : ${bookings}"
+         class="booking-card">
+
+      <p>
+        <strong>Booking ID:</strong>
+        <span th:text="${booking.bookingId}">
+                    1
+                </span>
+      </p>
+
+      <p>
+        <strong>Facility:</strong>
+        <span th:text="${booking.slot.facility.facilityName}">
+                    Community Hall
+                </span>
+      </p>
+
+      <p>
+        <strong>Date:</strong>
+        <span th:text="${booking.bookingDate}">
+                    2026-08-14
+                </span>
+      </p>
+
+      <p>
+        <strong>Time:</strong>
+        <span th:text="${booking.slot.startTime + ' - ' + booking.slot.endTime}">
+                    09:00 - 10:00
+                </span>
+      </p>
+
+      <span th:class="${booking.status.name() == 'CANCELLED'
+                    ? 'status cancelled'
+                    : 'status'}"
+            th:text="${booking.status}">
+                PENDING
+            </span>
+
+      <form th:if="${booking.status.name() != 'CANCELLED'}"
+            action="/booking/cancel"
+            method="post">
+
+        <input type="hidden"
+               name="bookingId"
+               th:value="${booking.bookingId}">
+
+        <input type="hidden"
+               name="userId"
+               th:value="${userId}">
+
+        <button type="submit"
+                class="cancel-button">
+          Cancel Booking
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <a th:href="@{/facilities}"
+     class="back-link">
+    Back to Facilities
+  </a>
+
+</div>
+
+</body>
+</html>

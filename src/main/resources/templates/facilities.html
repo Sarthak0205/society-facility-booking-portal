@@ -34,8 +34,9 @@
   <div th:unless="${facilities.isEmpty()}"
        class="facility-list">
 
-    <div th:each="facility : ${facilities}"
-         class="facility-card">
+    <a th:each="facility : ${facilities}"
+       th:href="@{/slots(facilityId=${facility.facilityId},date=${selectedDate})}"
+       class="facility-card">
 
       <h2 class="facility-name"
           th:text="${facility.facilityName}">
@@ -46,6 +47,8 @@
          th:text="${facility.description}">
         Facility Description
       </p>
+
+    </a>
 
     </div>
 
