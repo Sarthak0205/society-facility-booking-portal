@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDate;
+
 @Controller
 public class FacilityController {
 
@@ -17,6 +19,8 @@ public class FacilityController {
     @GetMapping("/facilities")
     public String viewFacilities(Model model) {
         model.addAttribute("facilities", facilityService.getAllFacilities());
+        model.addAttribute("selectedDate", LocalDate.now());
+
         return "facilities";
     }
 }

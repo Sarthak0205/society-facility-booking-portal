@@ -39,8 +39,9 @@
   <div th:unless="${slots.isEmpty()}"
        class="slot-list">
 
-    <div th:each="slot : ${slots}"
-         class="slot-card">
+    <a th:each="slot : ${slots}"
+       th:href="@{/booking(slotId=${slot.slotId})}"
+       class="slot-card">
 
       <div class="slot-time"
            th:text="${slot.startTime} + ' - ' + ${slot.endTime}">
@@ -51,7 +52,7 @@
         Available
       </div>
 
-    </div>
+    </a>
 
   </div>
 

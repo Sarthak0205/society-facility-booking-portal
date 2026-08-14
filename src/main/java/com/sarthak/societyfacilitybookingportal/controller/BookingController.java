@@ -3,6 +3,7 @@ package com.sarthak.societyfacilitybookingportal.controller;
 import com.sarthak.societyfacilitybookingportal.entity.Booking;
 import com.sarthak.societyfacilitybookingportal.entity.Slot;
 import com.sarthak.societyfacilitybookingportal.entity.User;
+import com.sarthak.societyfacilitybookingportal.repository.BookingRepository;
 import com.sarthak.societyfacilitybookingportal.repository.SlotRepository;
 import com.sarthak.societyfacilitybookingportal.repository.UserRepository;
 import com.sarthak.societyfacilitybookingportal.service.BookingService;
@@ -16,15 +17,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BookingController {
 
     private final BookingService bookingService;
+    private final BookingRepository bookingRepository;
     private final SlotRepository slotRepository;
     private final UserRepository userRepository;
 
     public BookingController(
             BookingService bookingService,
+            BookingRepository bookingRepository,
             SlotRepository slotRepository,
             UserRepository userRepository) {
 
         this.bookingService = bookingService;
+        this.bookingRepository = bookingRepository;
         this.slotRepository = slotRepository;
         this.userRepository = userRepository;
     }
@@ -68,5 +72,31 @@ public class BookingController {
         model.addAttribute("booking", booking);
 
         return "booking-success";
+    }
+
+    @GetMapping("/bookings")
+    public String viewBookings(
+            @RequestParam Long userId,
+            Model model) {
+
+        model.addAttribute(
+                "bookings",
+                bookingService.getUserBookings(userId)
+        );
+
+        model.addAttribute("userId", userId);
+
+        return "bookings";
+    }
+
+    @PostMapping("/booking/cancel")
+    public String cancelBooking(
+            @RequestParam Long bookingId,
+            @RequestParam Long userId,
+            Model model) {
+
+        bookingService.cancelBooking(bookingId);
+
+        return "redirect:/bookings?userId=" + userId;
     }
 }
