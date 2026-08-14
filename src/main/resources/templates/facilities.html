@@ -5,63 +5,142 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Facilities - Society Facility Booking Portal</title>
+  <title>Facilities — SocietyHub</title>
 
+  <link rel="stylesheet" href="/css/app.css">
   <link rel="stylesheet" href="/css/facilities.css">
 </head>
 
 <body>
 
-<div class="facilities-container">
+<div class="app-shell">
 
-  <div class="logo">
-    🏢
-  </div>
+  <!-- Sidebar -->
+  <aside class="sidebar">
 
-  <h1 class="title">
-    Available Facilities
-  </h1>
-
-  <p class="subtitle">
-    Choose a facility for your booking
-  </p>
-
-  <div th:if="${facilities.isEmpty()}"
-       class="empty-message">
-    No facilities are currently available.
-  </div>
-
-  <div th:unless="${facilities.isEmpty()}"
-       class="facility-list">
-
-    <a th:each="facility : ${facilities}"
-       th:href="@{/slots(facilityId=${facility.facilityId},date=${selectedDate})}"
-       class="facility-card">
-
-      <h2 class="facility-name"
-          th:text="${facility.facilityName}">
-        Facility Name
-      </h2>
-
-      <p class="facility-description"
-         th:text="${facility.description}">
-        Facility Description
-      </p>
-
+    <a href="/facilities" class="brand">
+      <div class="brand-mark">S</div>
+      <span class="brand-name">SocietyHub</span>
     </a>
+
+    <nav class="nav">
+
+      <a href="/facilities" class="nav-link active">
+        <span class="nav-icon">▦</span>
+        <span>Facilities</span>
+      </a>
+
+      <a href="/bookings?userId=1" class="nav-link">
+        <span class="nav-icon">▤</span>
+        <span>My Bookings</span>
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <a href="/users/login" class="nav-link">
+        <span class="nav-icon">↪</span>
+        <span>Logout</span>
+      </a>
 
     </div>
 
-  </div>
+  </aside>
 
-  <div class="divider">
-    <span>Society Facilities</span>
-  </div>
+  <!-- Main Content -->
+  <main class="main-content">
 
-  <a href="/users/login"
-     class="back-link">
-    Back to Login
-  </a>
+    <!-- Topbar -->
+    <header class="topbar">
+
+      <div>
+        <strong>Facilities</strong>
+      </div>
+
+      <div class="user-area">
+        <span class="user-avatar">S</span>
+        <span class="user-name">Resident</span>
+      </div>
+
+    </header>
+
+    <!-- Page -->
+    <div class="page-content">
+
+      <section class="page-header">
+
+        <p class="eyebrow">
+          SOCIETY FACILITIES
+        </p>
+
+        <h1 class="page-title">
+          Find a place for your next activity.
+        </h1>
+
+        <p class="page-subtitle">
+          Browse available society facilities and choose a convenient time slot.
+        </p>
+
+      </section>
+
+      <div th:if="${facilities.isEmpty()}"
+           class="empty-state">
+
+        <div class="empty-icon">
+          ○
+        </div>
+
+        <h2>No facilities available</h2>
+
+        <p>
+          There are currently no facilities available for booking.
+        </p>
+
+      </div>
+
+      <div th:unless="${facilities.isEmpty()}"
+           class="facility-grid">
+
+        <a th:each="facility : ${facilities}"
+           th:href="@{/slots(facilityId=${facility.facilityId},date=${selectedDate})}"
+           class="facility-card">
+
+          <div class="facility-icon">
+            <span>◆</span>
+          </div>
+
+          <div class="facility-card-body">
+
+            <h2 th:text="${facility.facilityName}">
+              Facility Name
+            </h2>
+
+            <p th:text="${facility.description}">
+              Facility description
+            </p>
+
+          </div>
+
+          <div class="facility-card-footer">
+
+                        <span>
+                            View available slots
+                        </span>
+
+            <span class="arrow">
+                            →
+                        </span>
+
+          </div>
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </main>
 
 </div>
 
