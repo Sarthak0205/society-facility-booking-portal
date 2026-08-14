@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Booking Submitted — SocietyHub</title>
+
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/booking-success.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+
+    <a href="/facilities" class="brand">
+      <div class="brand-mark">S</div>
+      <span class="brand-name">SocietyHub</span>
+    </a>
+
+    <nav class="nav">
+
+      <a href="/facilities" class="nav-link active">
+        <span class="nav-icon">▦</span>
+        <span>Facilities</span>
+      </a>
+
+      <a href="/bookings?userId=1" class="nav-link">
+        <span class="nav-icon">▤</span>
+        <span>My Bookings</span>
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <a href="/users/login" class="nav-link">
+        <span class="nav-icon">↪</span>
+        <span>Logout</span>
+      </a>
+
+    </div>
+
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Topbar -->
+    <header class="topbar">
+
+      <strong>Booking Submitted</strong>
+
+      <div class="user-area">
+        <span class="user-avatar">S</span>
+        <span class="user-name">Resident</span>
+      </div>
+
+    </header>
+
+    <!-- Page -->
+    <div class="page-content success-page">
+
+      <a href="/facilities" class="back-link">
+        ← Back to Facilities
+      </a>
+
+      <section class="success-header">
+
+        <div class="success-icon">
+          ✓
+        </div>
+
+        <p class="eyebrow">
+          BOOKING SUBMITTED
+        </p>
+
+        <h1 class="page-title">
+          Your booking request is submitted.
+        </h1>
+
+        <p class="page-subtitle">
+          Your facility booking request has been successfully recorded.
+        </p>
+
+      </section>
+
+      <!-- Status -->
+      <div class="status-card">
+
+        <div class="status-icon">
+          ✓
+        </div>
+
+        <div>
+                    <span class="status-label">
+                        Booking Status
+                    </span>
+
+          <strong th:text="${booking.status}">
+            PENDING
+          </strong>
+        </div>
+
+      </div>
+
+      <!-- Booking Details -->
+      <section class="booking-summary">
+
+        <div class="summary-header">
+          <div>
+            <p class="summary-eyebrow">
+              BOOKING DETAILS
+            </p>
+
+            <h2>
+                            <span th:text="${booking.slot.facility.facilityName}">
+                                Community Hall
+                            </span>
+            </h2>
+          </div>
+
+          <div class="booking-id">
+            <span>Booking ID</span>
+            <strong th:text="${booking.bookingId}">
+              1
+            </strong>
+          </div>
+        </div>
+
+        <div class="summary-details">
+
+          <div class="detail-item">
+
+                        <span class="detail-icon">
+                            ▣
+                        </span>
+
+            <div>
+                            <span class="detail-label">
+                                Date
+                            </span>
+
+              <strong th:text="${booking.bookingDate}">
+                2026-08-14
+              </strong>
+            </div>
+
+          </div>
+
+          <div class="detail-item">
+
+                        <span class="detail-icon">
+                            ◷
+                        </span>
+
+            <div>
+                            <span class="detail-label">
+                                Time
+                            </span>
+
+              <strong
+                      th:text="${booking.slot.startTime + ' - ' + booking.slot.endTime}">
+                09:00 - 10:00
+              </strong>
+            </div>
+
+          </div>
+
+          <div class="detail-item">
+
+                        <span class="detail-icon">
+                            ◆
+                        </span>
+
+            <div>
+                            <span class="detail-label">
+                                Facility
+                            </span>
+
+              <strong
+                      th:text="${booking.slot.facility.facilityName}">
+                Community Hall
+              </strong>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Actions -->
+      <div class="success-actions">
+
+        <a href="/facilities" class="secondary-action">
+          ← Back to Facilities
+        </a>
+
+        <a href="/bookings?userId=1" class="primary-action">
+          View My Bookings →
+        </a>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+</body>
+</html>

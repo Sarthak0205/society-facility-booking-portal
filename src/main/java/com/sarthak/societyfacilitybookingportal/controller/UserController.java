@@ -43,4 +43,25 @@ public class UserController {
 
         return "register";
     }
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginUser(
+            @RequestParam String email,
+            @RequestParam String password,
+            Model model) {
+
+        String result = userService.loginUser(email, password);
+
+        if (result.equals("Login successful!")) {
+            model.addAttribute("success", result);
+        } else {
+            model.addAttribute("error", result);
+        }
+
+        return "login";
+    }
 }

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Bookings — SocietyHub</title>
+
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/bookings.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+
+    <a href="/facilities" class="brand">
+      <div class="brand-mark">S</div>
+      <span class="brand-name">SocietyHub</span>
+    </a>
+
+    <nav class="nav">
+
+      <a href="/facilities" class="nav-link">
+        <span class="nav-icon">▦</span>
+        <span>Facilities</span>
+      </a>
+
+      <a href="/bookings?userId=1" class="nav-link active">
+        <span class="nav-icon">▤</span>
+        <span>My Bookings</span>
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <a href="/users/login" class="nav-link">
+        <span class="nav-icon">↪</span>
+        <span>Logout</span>
+      </a>
+
+    </div>
+
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Topbar -->
+    <header class="topbar">
+
+      <strong>My Bookings</strong>
+
+      <div class="user-area">
+        <span class="user-avatar">S</span>
+        <span class="user-name">Resident</span>
+      </div>
+
+    </header>
+
+    <!-- Page -->
+    <div class="page-content bookings-page">
+
+      <section class="page-header">
+
+        <p class="eyebrow">
+          MY RESERVATIONS
+        </p>
+
+        <h1 class="page-title">
+          Your bookings.
+        </h1>
+
+        <p class="page-subtitle">
+          View and manage your facility reservations.
+        </p>
+
+      </section>
+
+      <!-- Empty state -->
+      <div th:if="${bookings.isEmpty()}"
+           class="empty-state">
+
+        <div class="empty-icon">
+          ▤
+        </div>
+
+        <h2>
+          No bookings yet
+        </h2>
+
+        <p>
+          You haven't booked any society facilities yet.
+        </p>
+
+        <a href="/facilities" class="browse-button">
+          Browse Facilities →
+        </a>
+
+      </div>
+
+      <!-- Booking list -->
+      <div th:unless="${bookings.isEmpty()}"
+           class="booking-list">
+
+        <article th:each="booking : ${bookings}"
+                 class="booking-card">
+
+          <!-- Card Header -->
+          <div class="booking-card-header">
+
+            <div>
+
+              <p class="booking-eyebrow">
+                FACILITY
+              </p>
+
+              <h2 th:text="${booking.slot.facility.facilityName}">
+                Community Hall
+              </h2>
+
+            </div>
+
+            <span
+                    th:class="${booking.status.name() == 'CANCELLED'
+                                ? 'status status-cancelled'
+                                : booking.status.name() == 'CONFIRMED'
+                                    ? 'status status-confirmed'
+                                    : 'status status-pending'}"
+                    th:text="${booking.status}">
+                            PENDING
+                        </span>
+
+          </div>
+
+          <!-- Details -->
+          <div class="booking-details">
+
+            <div class="detail-item">
+
+                            <span class="detail-icon">
+                                ▣
+                            </span>
+
+              <div>
+                                <span class="detail-label">
+                                    Date
+                                </span>
+
+                <strong th:text="${booking.bookingDate}">
+                  2026-08-14
+                </strong>
+              </div>
+
+            </div>
+
+            <div class="detail-item">
+
+                            <span class="detail-icon">
+                                ◷
+                            </span>
+
+              <div>
+                                <span class="detail-label">
+                                    Time
+                                </span>
+
+                <strong
+                        th:text="${booking.slot.startTime + ' - ' + booking.slot.endTime}">
+                  09:00 - 10:00
+                </strong>
+              </div>
+
+            </div>
+
+            <div class="detail-item">
+
+                            <span class="detail-icon">
+                                #
+                            </span>
+
+              <div>
+                                <span class="detail-label">
+                                    Booking ID
+                                </span>
+
+                <strong th:text="${booking.bookingId}">
+                  1
+                </strong>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Card Footer -->
+          <div class="booking-card-footer">
+
+                        <span
+                                th:if="${booking.status.name() == 'CANCELLED'}"
+                                class="cancelled-message">
+                            This booking has been cancelled.
+                        </span>
+
+            <span
+                    th:unless="${booking.status.name() == 'CANCELLED'}"
+                    class="booking-message">
+                            Your reservation is active.
+                        </span>
+
+            <form
+                    th:if="${booking.status.name() != 'CANCELLED'}"
+                    action="/booking/cancel"
+                    method="post">
+
+              <input
+                      type="hidden"
+                      name="bookingId"
+                      th:value="${booking.bookingId}">
+
+              <input
+                      type="hidden"
+                      name="userId"
+                      th:value="${userId}">
+
+              <button
+                      type="submit"
+                      class="cancel-button">
+                Cancel Booking
+              </button>
+
+            </form>
+
+          </div>
+
+        </article>
+
+      </div>
+
+      <div
+              th:unless="${bookings.isEmpty()}"
+              class="bottom-action">
+
+        <a th:href="@{/facilities}"
+           class="browse-link">
+          ← Browse Facilities
+        </a>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+</body>
+</html>
