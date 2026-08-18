@@ -5,97 +5,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sign In - Society Facility Booking Portal</title>
+    <title>Sign In — SocietyHub</title>
 
-    <link rel="stylesheet"
-          href="/css/register.css">
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 
 <body>
 
-<div class="register-card">
+<div class="auth-page">
 
-    <!-- Logo -->
-    <div class="logo">
-        🏢
-    </div>
+    <div class="auth-card">
 
-    <!-- Heading -->
-    <h1 class="title">
-        Welcome Back
-    </h1>
-
-    <p class="subtitle">
-        Sign in to your resident account
-    </p>
-
-    <!-- Success Message -->
-    <div th:if="${success}"
-         class="alert alert-success"
-         th:text="${success}">
-    </div>
-
-    <!-- Error Message -->
-    <div th:if="${error}"
-         class="alert alert-danger"
-         th:text="${error}">
-    </div>
-
-    <!-- Login Form -->
-    <form action="/users/login"
-          method="post">
-
-        <!-- Email -->
-        <div class="form-group">
-            <div class="input-wrapper">
-
-                <span class="input-icon">✉</span>
-
-                <input type="email"
-                       class="form-control"
-                       name="email"
-                       placeholder="Email Address"
-                       required>
-
-            </div>
+        <!-- Brand -->
+        <div class="brand">
+            <div class="brand-mark">S</div>
+            <span class="brand-name">SocietyHub</span>
         </div>
 
-        <!-- Password -->
-        <div class="form-group">
-            <div class="input-wrapper">
+        <!-- Heading -->
+        <div class="auth-header">
 
-                <span class="input-icon">🔒</span>
+            <p class="eyebrow">
+                RESIDENT PORTAL
+            </p>
 
-                <input type="password"
-                       class="form-control"
-                       name="password"
-                       placeholder="Password"
-                       required>
+            <h1>
+                Welcome back.
+            </h1>
 
-            </div>
+            <p>
+                Sign in to manage your society bookings.
+            </p>
+
         </div>
 
-        <!-- Login Button -->
-        <button type="submit"
-                class="register-btn">
-            Sign In
-        </button>
+        <!-- Success -->
+        <div th:if="${success}"
+             class="alert alert-success"
+             th:text="${success}">
+        </div>
 
-    </form>
+        <!-- Error -->
+        <div th:if="${error}"
+             class="alert alert-error"
+             th:text="${error}">
+        </div>
 
-    <!-- Registration Link -->
-    <div class="divider">
-        <span>Don't have an account?</span>
+        <!-- Login -->
+        <form action="/users/login"
+              method="post"
+              class="auth-form">
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email address
+                </label>
+
+                <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required>
+
+            </div>
+
+            <button type="submit">
+                Sign In
+                <span>→</span>
+            </button>
+
+        </form>
+
+        <!-- Register -->
+        <div class="register-section">
+
+            <span>
+                Don't have an account?
+            </span>
+
+            <a href="/users/register">
+                Create an account
+            </a>
+
+        </div>
+
     </div>
-
-    <p class="signin-text">
-        Create your resident account
-    </p>
-
-    <a href="/users/register"
-       class="signin-link">
-        Register
-    </a>
 
 </div>
 
