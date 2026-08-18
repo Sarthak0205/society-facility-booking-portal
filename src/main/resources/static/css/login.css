@@ -1,0 +1,312 @@
+/* =========================================
+   SocietyHub — Login
+   ========================================= */
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    background:
+            radial-gradient(
+                    circle at top left,
+                    #eee8ff 0,
+                    #f7f5ff 35%,
+                    #f8f9fc 75%
+            );
+
+    color: var(--text, #20242a);
+}
+
+.auth-page {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 32px;
+
+    box-sizing: border-box;
+}
+
+.auth-card {
+    width: min(430px, 100%);
+
+    padding: 42px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8e4f2;
+    border-radius: 24px;
+
+    box-shadow:
+            0 20px 50px rgba(70, 52, 120, 0.10);
+
+    box-sizing: border-box;
+}
+
+/* Brand */
+
+.brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-bottom: 38px;
+
+    text-decoration: none;
+}
+
+.brand-mark {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #6d45d8;
+    color: white;
+
+    font-size: 19px;
+    font-weight: 800;
+
+    box-shadow:
+            0 7px 18px rgba(109, 69, 216, 0.25);
+}
+
+.brand-name {
+    color: #29233b;
+
+    font-size: 20px;
+    font-weight: 800;
+}
+
+/* Header */
+
+.auth-header {
+    margin-bottom: 28px;
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+
+    color: #7652d4;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1.2px;
+}
+
+.auth-header h1 {
+    margin: 0 0 8px;
+
+    color: #20242a;
+
+    font-size: 32px;
+    line-height: 1.15;
+
+    letter-spacing: -0.5px;
+}
+
+.auth-header p:last-child {
+    margin: 0;
+
+    color: #737c8d;
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Alerts */
+
+.alert {
+    margin-bottom: 18px;
+
+    padding: 12px 14px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.alert-success {
+    background: #e9f8ef;
+    color: #197443;
+    border: 1px solid #ccebd8;
+}
+
+.alert-error {
+    background: #fff0f1;
+    color: #a13c4a;
+    border: 1px solid #f0d2d6;
+}
+
+/* Form */
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.form-group label {
+    color: #35313e;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.form-group input {
+    width: 100%;
+
+    min-height: 46px;
+
+    padding: 0 13px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #ddd8e8;
+    border-radius: 10px;
+
+    background: #fcfbfe;
+
+    color: #20242a;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+            border-color 0.15s ease,
+            box-shadow 0.15s ease,
+            background 0.15s ease;
+}
+
+.form-group input::placeholder {
+    color: #a3a0aa;
+}
+
+.form-group input:focus {
+    background: #ffffff;
+
+    border-color: #7652d4;
+
+    box-shadow:
+            0 0 0 3px rgba(118, 82, 212, 0.12);
+}
+
+/* Button */
+
+.auth-form button {
+    width: 100%;
+
+    min-height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    margin-top: 4px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #6d45d8;
+    color: white;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+            0 7px 18px rgba(109, 69, 216, 0.20);
+
+    transition:
+            transform 0.15s ease,
+            background 0.15s ease,
+            box-shadow 0.15s ease;
+}
+
+.auth-form button span {
+    font-size: 17px;
+}
+
+.auth-form button:hover {
+    background: #5d37c5;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+            0 9px 22px rgba(109, 69, 216, 0.27);
+}
+
+/* Register */
+
+.register-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 28px;
+    padding-top: 22px;
+
+    border-top: 1px solid #eeeaf4;
+
+    color: #85818e;
+
+    font-size: 13px;
+}
+
+.register-section a {
+    color: #6d45d8;
+
+    font-weight: 800;
+
+    text-decoration: none;
+}
+
+.register-section a:hover {
+    color: #5230b5;
+    text-decoration: underline;
+}
+
+/* Mobile */
+
+@media (max-width: 520px) {
+
+    .auth-page {
+        padding: 18px;
+    }
+
+    .auth-card {
+        padding: 30px 24px;
+
+        border-radius: 20px;
+    }
+
+    .auth-header h1 {
+        font-size: 28px;
+    }
+}
