@@ -1,5 +1,6 @@
 package com.sarthak.societyfacilitybookingportal.controller;
 
+import com.sarthak.societyfacilitybookingportal.service.FacilityService;
 import com.sarthak.societyfacilitybookingportal.service.SlotService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -13,9 +14,14 @@ import java.time.LocalDate;
 public class SlotController {
 
     private final SlotService slotService;
+    private final FacilityService facilityService;
 
-    public SlotController(SlotService slotService) {
+    public SlotController(
+            SlotService slotService,
+            FacilityService facilityService) {
+
         this.slotService = slotService;
+        this.facilityService = facilityService;
     }
 
     @GetMapping("/slots")
@@ -28,6 +34,11 @@ public class SlotController {
         model.addAttribute(
                 "slots",
                 slotService.getAvailableSlots(facilityId, date)
+        );
+
+        model.addAttribute(
+                "facility",
+                facilityService.getFacilityById(facilityId)
         );
 
         model.addAttribute("selectedDate", date);
