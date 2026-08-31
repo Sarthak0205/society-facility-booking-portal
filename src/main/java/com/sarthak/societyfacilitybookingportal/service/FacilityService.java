@@ -18,4 +18,9 @@ public class FacilityService {
     public List<Facility> getAllFacilities() {
         return facilityRepository.findAll();
     }
+
+    public Facility getFacilityById(Long facilityId) {
+        return facilityRepository.findById(facilityId)
+                .orElseThrow(() -> new IllegalArgumentException("Facility not found"));
+    }
 }

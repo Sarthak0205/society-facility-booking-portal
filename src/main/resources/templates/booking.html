@@ -30,7 +30,7 @@
         <span>Facilities</span>
       </a>
 
-      <a href="/bookings?userId=1" class="nav-link">
+      <a href="/bookings" class="nav-link">
         <span class="nav-icon">▤</span>
         <span>My Bookings</span>
       </a>
@@ -103,8 +103,13 @@
       <!-- Booking Summary -->
       <section class="booking-summary">
 
-        <div class="summary-icon">
-          📅
+        <div class="summary-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="17" rx="2"></rect>
+            <line x1="8" y1="2.5" x2="8" y2="6"></line>
+            <line x1="16" y1="2.5" x2="16" y2="6"></line>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+          </svg>
         </div>
 
         <div class="summary-content">
@@ -120,7 +125,14 @@
           <div class="summary-details">
 
             <div class="detail-item">
-              <span class="detail-icon">▣</span>
+              <span class="detail-icon" aria-hidden="true">
+  <svg viewBox="0 0 24 24">
+    <rect x="3" y="4" width="18" height="17" rx="2"></rect>
+    <line x1="8" y1="2.5" x2="8" y2="6"></line>
+    <line x1="16" y1="2.5" x2="16" y2="6"></line>
+    <line x1="3" y1="9" x2="21" y2="9"></line>
+  </svg>
+</span>
 
               <div>
                 <span class="detail-label">Date</span>
@@ -131,7 +143,13 @@
             </div>
 
             <div class="detail-item">
-              <span class="detail-icon">◷</span>
+              <span class="detail-icon" aria-hidden="true">
+  <svg viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="8.5"></circle>
+    <line x1="12" y1="7" x2="12" y2="12"></line>
+    <line x1="12" y1="12" x2="16" y2="14"></line>
+  </svg>
+</span>
 
               <div>
                 <span class="detail-label">Time</span>
@@ -154,34 +172,30 @@
           <h2>Booking details</h2>
 
           <p>
-            Enter your resident ID to submit the booking.
+            Your reservation will be created for your signed-in resident account.
           </p>
         </div>
 
-        <form
-          th:action="@{/booking(slotId=${slot.slotId})}"
-          method="post">
+        <form th:action="@{/booking}" method="post">
 
           <input
-            type="hidden"
-            name="slotId"
-            th:value="${slot.slotId}">
+                  type="hidden"
+                  name="slotId"
+                  th:value="${slot.slotId}">
 
-          <label for="userId">
-            Resident ID
-          </label>
+          <button
+                  type="submit"
+                  class="confirm-booking-button"
+                  th:disabled="${error != null}">
+    <span th:text="${error != null ? 'Slot unavailable' : 'Confirm Booking'}">
+        Confirm Booking
+    </span>
 
-          <input
-            type="number"
-            id="userId"
-            name="userId"
-            min="1"
-            placeholder="Enter your resident ID"
-            required>
-
-          <button type="submit">
-            Confirm Booking
-            <span>→</span>
+            <span
+                    class="confirm-arrow"
+                    th:if="${error == null}">
+        →
+    </span>
           </button>
 
         </form>

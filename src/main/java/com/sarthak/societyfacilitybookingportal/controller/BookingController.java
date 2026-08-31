@@ -3,10 +3,10 @@ package com.sarthak.societyfacilitybookingportal.controller;
 import com.sarthak.societyfacilitybookingportal.entity.Booking;
 import com.sarthak.societyfacilitybookingportal.entity.Slot;
 import com.sarthak.societyfacilitybookingportal.entity.User;
-import com.sarthak.societyfacilitybookingportal.repository.BookingRepository;
 import com.sarthak.societyfacilitybookingportal.repository.SlotRepository;
 import com.sarthak.societyfacilitybookingportal.repository.UserRepository;
 import com.sarthak.societyfacilitybookingportal.service.BookingService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,18 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BookingController {
 
     private final BookingService bookingService;
-    private final BookingRepository bookingRepository;
     private final SlotRepository slotRepository;
     private final UserRepository userRepository;
 
     public BookingController(
             BookingService bookingService,
-            BookingRepository bookingRepository,
             SlotRepository slotRepository,
             UserRepository userRepository) {
 
         this.bookingService = bookingService;
-        this.bookingRepository = bookingRepository;
         this.slotRepository = slotRepository;
         this.userRepository = userRepository;
     }
@@ -36,10 +33,19 @@ public class BookingController {
     @GetMapping("/booking")
     public String bookingPage(
             @RequestParam Long slotId,
+            HttpSession session,
             Model model) {
+
+        if (session.getAttribute("userId") == null) {
+            return "redirect:/users/login";
+        }
 
         Slot slot = slotRepository.findById(slotId)
                 .orElseThrow(() -> new IllegalArgumentException("Slot not found"));
+
+        if (!slot.isAvailable()) {
+            model.addAttribute("error", "This slot is no longer available.");
+        }
 
         model.addAttribute("slot", slot);
 
@@ -49,8 +55,14 @@ public class BookingController {
     @PostMapping("/booking")
     public String submitBooking(
             @RequestParam Long slotId,
-            @RequestParam Long userId,
+            HttpSession session,
             Model model) {
+
+        Long userId = (Long) session.getAttribute("userId");
+
+        if (userId == null) {
+            return "redirect:/users/login";
+        }
 
         Slot slot = slotRepository.findById(slotId)
                 .orElseThrow(() -> new IllegalArgumentException("Slot not found"));
@@ -66,9 +78,6 @@ public class BookingController {
 
         Booking booking = bookingService.createBooking(user, slot);
 
-        slot.setAvailable(false);
-        slotRepository.save(slot);
-
         model.addAttribute("booking", booking);
 
         return "booking-success";
@@ -76,15 +85,19 @@ public class BookingController {
 
     @GetMapping("/bookings")
     public String viewBookings(
-            @RequestParam Long userId,
+            HttpSession session,
             Model model) {
+
+        Long userId = (Long) session.getAttribute("userId");
+
+        if (userId == null) {
+            return "redirect:/users/login";
+        }
 
         model.addAttribute(
                 "bookings",
                 bookingService.getUserBookings(userId)
         );
-
-        model.addAttribute("userId", userId);
 
         return "bookings";
     }
@@ -92,11 +105,16 @@ public class BookingController {
     @PostMapping("/booking/cancel")
     public String cancelBooking(
             @RequestParam Long bookingId,
-            @RequestParam Long userId,
-            Model model) {
+            HttpSession session) {
 
-        bookingService.cancelBooking(bookingId);
+        Long userId = (Long) session.getAttribute("userId");
 
-        return "redirect:/bookings?userId=" + userId;
+        if (userId == null) {
+            return "redirect:/users/login";
+        }
+
+        bookingService.cancelBooking(bookingId, userId);
+
+        return "redirect:/bookings";
     }
 }

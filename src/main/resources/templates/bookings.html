@@ -30,7 +30,7 @@
         <span>Facilities</span>
       </a>
 
-      <a href="/bookings?userId=1" class="nav-link active">
+      <a href="/bookings" class="nav-link active">
         <span class="nav-icon">▤</span>
         <span>My Bookings</span>
       </a>
@@ -201,17 +201,17 @@
           <!-- Card Footer -->
           <div class="booking-card-footer">
 
-                        <span
-                                th:if="${booking.status.name() == 'CANCELLED'}"
-                                class="cancelled-message">
-                            This booking has been cancelled.
-                        </span>
+    <span
+            th:if="${booking.status.name() == 'CANCELLED'}"
+            class="cancelled-message">
+        This booking has been cancelled.
+    </span>
 
             <span
                     th:unless="${booking.status.name() == 'CANCELLED'}"
                     class="booking-message">
-                            Your reservation is active.
-                        </span>
+        Your reservation is active.
+    </span>
 
             <form
                     th:if="${booking.status.name() != 'CANCELLED'}"
@@ -222,11 +222,6 @@
                       type="hidden"
                       name="bookingId"
                       th:value="${booking.bookingId}">
-
-              <input
-                      type="hidden"
-                      name="userId"
-                      th:value="${userId}">
 
               <button
                       type="submit"
