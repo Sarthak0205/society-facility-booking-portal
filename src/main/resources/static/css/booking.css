@@ -6,15 +6,18 @@
     max-width: 900px;
 }
 
-/* Back link */
+/* =========================================
+   Back Link
+   ========================================= */
 
 .back-link {
     display: inline-block;
+
     margin-bottom: 28px;
 
     color: var(--text-secondary);
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 650;
 
     text-decoration: none;
 
@@ -22,10 +25,12 @@
 }
 
 .back-link:hover {
-    color: var(--primary);
+    color: var(--brand-dark);
 }
 
-/* Header */
+/* =========================================
+   Header
+   ========================================= */
 
 .booking-header {
     max-width: 700px;
@@ -36,7 +41,9 @@
     margin-bottom: 8px;
 }
 
-/* User */
+/* =========================================
+   Booking User
+   ========================================= */
 
 .booking-user {
     display: flex;
@@ -49,8 +56,8 @@
 }
 
 .booking-avatar {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
 
     display: flex;
     align-items: center;
@@ -58,30 +65,34 @@
 
     border-radius: 50%;
 
-    background: var(--primary-light);
-    color: var(--primary-dark);
+    background: var(--brand-soft);
+    color: var(--brand-dark);
 
-    font-size: 14px;
-    font-weight: 800;
+    font-size: 13px;
+    font-weight: 700;
 }
 
-/* Error */
+/* =========================================
+   Error
+   ========================================= */
 
 .booking-error {
     margin-bottom: 20px;
     padding: 14px 16px;
 
-    border: 1px solid #f3c4c4;
-    border-radius: 12px;
+    border: 1px solid #f0c8c5;
+    border-radius: var(--radius-md);
 
-    background: #fff1f1;
-    color: #a52a2a;
+    background: #fff7f6;
+    color: var(--danger);
 
     font-size: 14px;
     font-weight: 600;
 }
 
-/* Booking summary */
+/* =========================================
+   Booking Summary
+   ========================================= */
 
 .booking-summary {
     display: flex;
@@ -90,15 +101,24 @@
     padding: 24px;
 
     background: var(--surface);
-    border: 1px solid var(--border-light);
+    border: 1px solid var(--border);
     border-radius: var(--radius-lg);
 
-    box-shadow: var(--shadow-sm);
+    transition:
+            border-color 0.15s ease,
+            box-shadow 0.15s ease;
 }
 
+.booking-summary:hover {
+    border-color: #d8d1f5;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* Summary Icon */
+
 .summary-icon {
-    width: 56px;
-    height: 56px;
+    width: 52px;
+    height: 52px;
 
     flex-shrink: 0;
 
@@ -106,12 +126,27 @@
     align-items: center;
     justify-content: center;
 
-    border-radius: 16px;
+    border: 1px solid #ddd6fe;
+    border-radius: 10px;
 
-    background: var(--primary-light);
+    background: var(--brand-soft);
+    color: var(--brand);
 
-    font-size: 27px;
+    font-size: 23px;
 }
+
+.summary-icon svg {
+    width: 23px;
+    height: 23px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Summary Content */
 
 .summary-content {
     flex: 1;
@@ -120,11 +155,12 @@
 .summary-label {
     margin: 0 0 5px;
 
-    color: var(--primary);
+    color: var(--brand);
 
     font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1.1px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 .summary-content h2 {
@@ -134,7 +170,10 @@
 
     font-size: 21px;
     line-height: 1.3;
+    font-weight: 700;
 }
+
+/* Summary Details */
 
 .summary-details {
     display: flex;
@@ -157,12 +196,24 @@
     align-items: center;
     justify-content: center;
 
-    border-radius: 10px;
+    border: 1px solid #e1dafe;
+    border-radius: 9px;
 
-    background: var(--primary-light);
-    color: var(--primary);
+    background: #faf9ff;
+    color: var(--brand);
 
-    font-size: 17px;
+    font-size: 15px;
+}
+
+.detail-icon svg {
+    width: 18px;
+    height: 18px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .detail-item > div {
@@ -179,20 +230,29 @@
 .detail-item strong {
     color: var(--text);
     font-size: 14px;
+    font-weight: 650;
 }
 
-/* Form card */
+/* =========================================
+   Booking Form Card
+   ========================================= */
 
 .booking-form-card {
     margin-top: 20px;
-
     padding: 26px;
 
     background: var(--surface);
-    border: 1px solid var(--border-light);
+    border: 1px solid var(--border);
     border-radius: var(--radius-lg);
 
-    box-shadow: var(--shadow-sm);
+    transition:
+            border-color 0.15s ease,
+            box-shadow 0.15s ease;
+}
+
+.booking-form-card:hover {
+    border-color: #d8d1f5;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
 }
 
 .form-heading {
@@ -205,6 +265,7 @@
     color: var(--text);
 
     font-size: 18px;
+    font-weight: 650;
 }
 
 .form-heading p {
@@ -213,94 +274,83 @@
     color: var(--text-muted);
 
     font-size: 14px;
+    line-height: 1.5;
 }
 
-/* Form */
+/* =========================================
+   Confirm Button
+   ========================================= */
 
-.booking-form-card label {
-    display: block;
-
-    margin-bottom: 8px;
-
-    color: var(--text);
-
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.booking-form-card input {
+.confirm-booking-button {
     width: 100%;
-
-    padding: 13px 14px;
-
-    box-sizing: border-box;
-
-    border: 1px solid var(--border-light);
-    border-radius: 10px;
-
-    background: #fff;
-    color: var(--text);
-
-    font-family: inherit;
-    font-size: 14px;
-
-    outline: none;
-
-    transition:
-            border-color 0.15s ease,
-            box-shadow 0.15s ease;
-}
-
-.booking-form-card input:focus {
-    border-color: var(--primary);
-
-    box-shadow: 0 0 0 3px var(--primary-light);
-}
-
-.booking-form-card input::placeholder {
-    color: var(--text-muted);
-}
-
-/* Button */
-
-.booking-form-card button {
-    width: 100%;
+    height: 52px;
 
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 9px;
 
-    margin-top: 20px;
-    padding: 13px 18px;
+    margin-top: 24px;
+    padding: 0 20px;
 
     border: none;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
 
-    background: var(--primary);
-    color: #fff;
+    background: var(--brand);
+    color: #ffffff;
 
     font-family: inherit;
-    font-size: 14px;
-    font-weight: 800;
+    font-size: 15px;
+    font-weight: 700;
 
     cursor: pointer;
 
     transition:
-            background 0.15s ease,
-            transform 0.15s ease;
+            background-color 0.15s ease,
+            transform 0.15s ease,
+            box-shadow 0.15s ease;
 }
 
-.booking-form-card button:hover {
-    background: var(--primary-dark);
+.confirm-booking-button:hover {
+    background: var(--brand-dark);
     transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(109, 61, 245, 0.18);
 }
 
-.booking-form-card button span {
-    font-size: 18px;
+.confirm-booking-button:active {
+    transform: translateY(0);
 }
 
-/* Mobile */
+.confirm-arrow {
+    font-size: 19px;
+    line-height: 1;
+
+    transition: transform 0.15s ease;
+}
+
+.confirm-booking-button:hover .confirm-arrow {
+    transform: translateX(3px);
+}
+.confirm-booking-button:disabled {
+    background: #d8dadd;
+    color: #ffffff;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.confirm-booking-button:disabled:hover {
+    background: #d8dadd;
+    transform: none;
+    box-shadow: none;
+}
+
+.confirm-booking-button:disabled .confirm-arrow {
+    transform: none;
+}
+/* =========================================
+   Mobile
+   ========================================= */
 
 @media (max-width: 600px) {
 

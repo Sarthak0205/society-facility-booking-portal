@@ -316,3 +316,33 @@
         box-sizing: border-box;
     }
 }
+
+/* Primary success-page action */
+.success-actions .primary-action {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    min-height: 44px !important;
+    padding: 0 18px !important;
+
+    border-radius: 10px !important;
+
+    background: #7c3aed !important;
+    color: #ffffff !important;
+
+    font-family: inherit !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+
+    text-decoration: none !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.success-actions .primary-action:hover {
+    background: #6d28d9 !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
