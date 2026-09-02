@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Bookings — SocietyHub</title>
+
+    <link rel="stylesheet" href="/css/app.css">
+
+    <style>
+        .admin-bookings-page {
+            max-width: 1100px;
+        }
+
+        .booking-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .booking-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+
+            padding: 22px 24px;
+
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+
+            transition:
+                    border-color 0.15s ease,
+                    box-shadow 0.15s ease,
+                    transform 0.15s ease;
+        }
+
+        .booking-card:hover {
+            border-color: #d8d1f5;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            transform: translateY(-1px);
+        }
+
+        .booking-card-main {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+
+            min-width: 0;
+        }
+
+        .booking-icon {
+            width: 52px;
+            height: 52px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid #ddd6fe;
+            border-radius: 12px;
+
+            background: var(--brand-soft);
+            color: var(--brand);
+
+            font-size: 21px;
+        }
+
+        .booking-info {
+            min-width: 0;
+        }
+
+        .booking-facility {
+            margin: 0 0 5px;
+
+            color: var(--text);
+
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .booking-resident {
+            margin: 0 0 4px;
+
+            color: var(--text-secondary);
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .booking-meta {
+            margin: 0;
+
+            color: var(--text-muted);
+
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .booking-actions {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            flex-shrink: 0;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 92px;
+            min-height: 32px;
+
+            padding: 0 11px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .status-pending {
+            background: #fff7e6;
+            color: #9a6700;
+        }
+
+        .status-confirmed {
+            background: #eaf7ef;
+            color: var(--success);
+        }
+
+        .status-cancelled {
+            background: #fff0ee;
+            color: var(--danger);
+        }
+        .status-rejected {
+            background: #fff0ee;
+            color: var(--danger);
+        }
+
+        .booking-action-button {
+            min-height: 38px;
+
+            padding: 0 13px;
+
+            border-radius: 8px;
+
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .confirm-button {
+            border: 1px solid #b9dfc9;
+            background: #f1fbf5;
+            color: var(--success);
+        }
+
+        .confirm-button:hover {
+            background: #e6f7ed;
+        }
+
+        .reject-button {
+            border: 1px solid #f0c8c5;
+            background: #fff7f6;
+            color: var(--danger);
+        }
+
+        .reject-button:hover {
+            background: #ffefed;
+        }
+
+        .booking-empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 260px;
+
+            padding: 32px;
+
+            text-align: center;
+
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+        }
+
+        .booking-empty-state h2 {
+            margin: 0 0 6px;
+
+            color: var(--text);
+            font-size: 18px;
+        }
+
+        .booking-empty-state p {
+            margin: 0;
+
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .booking-id {
+            color: var(--text-muted);
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 800px) {
+
+            .booking-card {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .booking-card-main {
+                width: 100%;
+            }
+
+            .booking-actions {
+                width: 100%;
+            }
+
+            .booking-action-button {
+                flex: 1;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <a href="/admin/dashboard" class="brand">
+
+            <div class="brand-mark">
+                S
+            </div>
+
+            <span class="brand-name">
+                SocietyHub
+            </span>
+
+        </a>
+
+        <nav class="nav">
+
+            <a href="/admin/dashboard" class="nav-link">
+
+                <span class="nav-icon">▦</span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+            <a href="/admin/facilities" class="nav-link">
+
+                <span class="nav-icon">□</span>
+
+                <span>
+                    Facilities
+                </span>
+
+            </a>
+
+            <a href="/admin/slots" class="nav-link">
+
+                <span class="nav-icon">◷</span>
+
+                <span>
+                    Slots
+                </span>
+
+            </a>
+
+            <a href="/admin/bookings" class="nav-link active">
+
+                <span class="nav-icon">▤</span>
+
+                <span>
+                    Bookings
+                </span>
+
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/users/logout" class="nav-link">
+
+                <span class="nav-icon">↪</span>
+
+                <span>
+                    Logout
+                </span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main -->
+
+    <main class="main-content">
+
+        <!-- Topbar -->
+
+        <header class="topbar">
+
+            <strong>
+                Manage Bookings
+            </strong>
+
+            <div class="user-area">
+
+                <span class="user-avatar">
+                    A
+                </span>
+
+                <span class="user-name"
+                      th:text="${userName}">
+                    Administrator
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- Page -->
+
+        <div class="page-content admin-bookings-page">
+
+            <section class="page-header">
+
+                <p class="eyebrow">
+                    ADMINISTRATION
+                </p>
+
+                <h1 class="page-title">
+                    Bookings
+                </h1>
+
+                <p class="page-subtitle">
+                    Review resident bookings and manage their approval status.
+                </p>
+
+            </section>
+
+
+            <!-- Empty State -->
+
+            <div
+                    th:if="${bookings.isEmpty()}"
+                    class="booking-empty-state">
+
+                <div class="booking-icon">
+                    ▤
+                </div>
+
+                <h2>
+                    No bookings yet
+                </h2>
+
+                <p>
+                    Resident bookings will appear here.
+                </p>
+
+            </div>
+
+
+            <!-- Booking List -->
+
+            <div
+                    th:unless="${bookings.isEmpty()}"
+                    class="booking-list">
+
+                <div
+                        th:each="booking : ${bookings}"
+                        class="booking-card">
+
+
+                    <!-- Booking Information -->
+
+                    <div class="booking-card-main">
+
+                        <div class="booking-icon">
+                            ▤
+                        </div>
+
+                        <div class="booking-info">
+
+                            <h2
+                                    class="booking-facility"
+                                    th:text="${booking.slot.facility.facilityName}">
+                                Community Hall
+                            </h2>
+
+                            <p
+                                    class="booking-resident"
+                                    th:text="${booking.user.fullName}">
+                                Resident Name
+                            </p>
+
+                            <p class="booking-meta">
+
+                                <span
+                                        th:text="${booking.user.email}">
+                                    resident@example.com
+                                </span>
+
+                                ·
+
+                                <span
+                                        th:text="${booking.slot.slotDate}">
+                                    2026-09-05
+                                </span>
+
+                                ·
+
+                                <span
+                                        th:text="${booking.slot.startTime + ' - ' + booking.slot.endTime}">
+                                    09:00 - 10:00
+                                </span>
+
+                            </p>
+
+                            <p class="booking-id">
+
+                                Booking #
+
+                                <span
+                                        th:text="${booking.bookingId}">
+                                    1
+                                </span>
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Status / Actions -->
+
+                    <div class="booking-actions">
+
+
+                        <!-- Pending -->
+
+                        <div
+                                th:if="${booking.status.name() == 'PENDING'}"
+                                style="display:flex; gap:9px; align-items:center;">
+
+                            <form
+                                    th:action="@{/admin/bookings/confirm/{id}(id=${booking.bookingId})}"
+                                    method="post">
+
+                                <button
+                                        type="submit"
+                                        class="booking-action-button confirm-button">
+                                    Confirm
+                                </button>
+
+                            </form>
+
+                            <form
+                                    th:action="@{/admin/bookings/reject/{id}(id=${booking.bookingId})}"
+                                    method="post">
+
+                                <button
+                                        type="submit"
+                                        class="booking-action-button reject-button">
+                                    Reject
+                                </button>
+
+                            </form>
+
+                        </div>
+
+
+                        <!-- Confirmed -->
+
+                        <span
+                                th:if="${booking.status.name() == 'CONFIRMED'}"
+                                class="status-badge status-confirmed">
+                            CONFIRMED
+                        </span>
+
+
+                        <!-- Cancelled -->
+
+                        <span
+                                th:if="${booking.status.name() == 'CANCELLED'}"
+                                class="status-badge status-cancelled">
+                            CANCELLED
+                        </span>
+
+                        <!-- Rejected -->
+
+                        <span
+                                th:if="${booking.status.name() == 'REJECTED'}"
+                                class="status-badge status-rejected">
+                            REJECTED
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <a
+                    href="/admin/dashboard"
+                    class="back-link">
+
+                ← Back to Dashboard
+
+            </a>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard — SocietyHub</title>
+
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <a href="/admin/dashboard" class="brand">
+            <div class="brand-mark">S</div>
+            <span class="brand-name">SocietyHub</span>
+        </a>
+
+        <nav class="nav">
+
+            <a href="/admin/dashboard" class="nav-link active">
+                <span class="nav-icon">▦</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/admin/facilities" class="nav-link">
+                <span class="nav-icon">□</span>
+                <span>Facilities</span>
+            </a>
+
+            <a href="/bookings" class="nav-link">
+                <span class="nav-icon">▤</span>
+                <span>Bookings</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/users/logout" class="nav-link">
+                <span class="nav-icon">↪</span>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+    <!-- Main -->
+    <main class="main-content">
+
+        <!-- Topbar -->
+        <header class="topbar">
+
+            <div>
+                <strong>Admin Dashboard</strong>
+            </div>
+
+            <div class="user-area">
+
+                <span class="user-avatar">A</span>
+
+                <span class="user-name"
+                      th:text="${userName}">
+                    Administrator
+                </span>
+
+            </div>
+
+        </header>
+
+        <!-- Page -->
+        <div class="page-content">
+
+            <!-- Header -->
+            <section class="page-header">
+
+                <p class="eyebrow">
+                    ADMINISTRATION
+                </p>
+
+                <h1 class="page-title">
+                    Welcome, Administrator.
+                </h1>
+
+                <p class="page-subtitle">
+                    Manage society facilities, slots and bookings.
+                </p>
+
+            </section>
+
+            <!-- Facility Management -->
+            <section class="admin-card">
+
+                <div class="admin-card-icon" aria-hidden="true">
+                    □
+                </div>
+
+                <p class="admin-card-label">
+                    FACILITY MANAGEMENT
+                </p>
+
+                <h2>
+                    Manage Society Facilities
+                </h2>
+
+                <p>
+                    Add new facilities, update existing facilities,
+                    and manage the facilities available to residents.
+                </p>
+
+                <a href="/admin/facilities"
+                   class="admin-card-action">
+
+                    Manage Facilities
+
+                    <span>→</span>
+
+                </a>
+
+            </section>
+
+            <!-- Future Admin Tools -->
+            <section class="admin-card">
+
+                <p class="admin-card-label">
+                    ADMIN TOOLS
+                </p>
+
+                <h2>
+                    More management tools
+                </h2>
+
+                <p>
+                    Slot management and booking approval
+                    will be added to the admin panel next.
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

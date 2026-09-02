@@ -51,6 +51,57 @@ public class BookingService {
         return bookingRepository.findByUserId(userId);
     }
 
+    public List<Booking> getAllBookings() {
+        return bookingRepository.findAllByOrderByBookingIdDesc();
+    }
+
+    public List<Booking> getPendingBookings() {
+        return bookingRepository.findByStatusOrderByBookingIdDesc(
+                BookingStatus.PENDING
+        );
+    }
+
+    @Transactional
+    public Booking confirmBooking(Long bookingId) {
+
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Booking not found"));
+
+        if (booking.getStatus() != BookingStatus.PENDING) {
+            throw new IllegalStateException(
+                    "Only pending bookings can be confirmed."
+            );
+        }
+
+        booking.setStatus(BookingStatus.CONFIRMED);
+
+        return bookingRepository.save(booking);
+    }
+
+    @Transactional
+    public Booking rejectBooking(Long bookingId) {
+
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Booking not found"));
+
+        if (booking.getStatus() != BookingStatus.PENDING) {
+            throw new IllegalStateException(
+                    "Only pending bookings can be rejected."
+            );
+        }
+
+        booking.setStatus(BookingStatus.REJECTED);
+
+        Slot slot = booking.getSlot();
+        slot.setAvailable(true);
+
+        slotRepository.save(slot);
+
+        return bookingRepository.save(booking);
+    }
+
     @Transactional
     public Booking cancelBooking(Long bookingId, Long userId) {
 
@@ -58,7 +109,7 @@ public class BookingService {
                 .orElseThrow(() ->
                         new IllegalArgumentException("Booking not found"));
 
-        if (!booking.getUser().getId().equals(userId))  {
+        if (!booking.getUser().getId().equals(userId)) {
             throw new IllegalStateException(
                     "You are not authorized to cancel this booking."
             );

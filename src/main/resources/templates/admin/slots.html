@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Slots — SocietyHub</title>
+
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/admin-slots.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- =========================
+         Sidebar
+         ========================= -->
+
+    <aside class="sidebar">
+
+        <a href="/admin/dashboard" class="brand">
+            <div class="brand-mark">S</div>
+            <span class="brand-name">SocietyHub</span>
+        </a>
+
+        <nav class="nav">
+
+            <a href="/admin/dashboard"
+               class="nav-link">
+
+                <span class="nav-icon">▦</span>
+                <span>Dashboard</span>
+
+            </a>
+
+            <a href="/admin/facilities"
+               class="nav-link">
+
+                <span class="nav-icon">□</span>
+                <span>Facilities</span>
+
+            </a>
+
+            <a th:href="@{/admin/slots(facilityId=${facility.facilityId})}"
+               class="nav-link active">
+
+                <span class="nav-icon">◷</span>
+                <span>Slots</span>
+
+            </a>
+
+            <a href="/bookings"
+               class="nav-link">
+
+                <span class="nav-icon">▤</span>
+                <span>Bookings</span>
+
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/users/logout"
+               class="nav-link">
+
+                <span class="nav-icon">↪</span>
+                <span>Logout</span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         Main Content
+         ========================= -->
+
+    <main class="main-content">
+
+        <!-- Topbar -->
+
+        <header class="topbar">
+
+            <strong>
+                Manage Slots
+            </strong>
+
+            <div class="user-area">
+
+                <span class="user-avatar">
+                    A
+                </span>
+
+                <span class="user-name"
+                      th:text="${userName}">
+                    Administrator
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- Page -->
+
+        <div class="page-content admin-slots-page">
+
+            <!-- Header -->
+
+            <section class="page-header">
+
+                <p class="eyebrow">
+                    SLOT MANAGEMENT
+                </p>
+
+                <h1 class="page-title">
+                    Slots
+                </h1>
+
+                <p class="page-subtitle">
+                    Manage time slots for
+                    <strong th:text="${facility.facilityName}">
+                        Community Hall
+                    </strong>.
+                </p>
+
+            </section>
+
+
+            <!-- =========================
+                 Facility Context
+                 ========================= -->
+
+            <div class="facility-context">
+
+                <div class="facility-context-icon">
+                    □
+                </div>
+
+                <div>
+
+                    <p class="facility-context-label">
+                        CURRENT FACILITY
+                    </p>
+
+                    <h2 th:text="${facility.facilityName}">
+                        Community Hall
+                    </h2>
+
+                    <p th:text="${facility.description}">
+                        Spacious hall suitable for meetings,
+                        celebrations, and social events.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 Toolbar
+                 ========================= -->
+
+            <div class="slot-toolbar">
+
+                <a th:href="@{/admin/slots/new(facilityId=${facility.facilityId})}"
+                   class="admin-primary-button">
+
+                    <span class="button-plus">
+                        +
+                    </span>
+
+                    <span>
+                        Add Slot
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- =========================
+                 Empty State
+                 ========================= -->
+
+            <div th:if="${slots.isEmpty()}"
+                 class="admin-slot-empty-state">
+
+                <div class="admin-slot-empty-icon">
+                    ◷
+                </div>
+
+                <h2>
+                    No slots have been created
+                </h2>
+
+                <p>
+                    Add a time slot for this facility to make
+                    it available to residents.
+                </p>
+
+                <a th:href="@{/admin/slots/new(facilityId=${facility.facilityId})}"
+                   class="admin-primary-button">
+
+                    <span class="button-plus">
+                        +
+                    </span>
+
+                    <span>
+                        Add First Slot
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- =========================
+                 Slot List
+                 ========================= -->
+
+            <div th:unless="${slots.isEmpty()}"
+                 class="admin-slot-list">
+
+                <div th:each="slot : ${slots}"
+                     class="admin-slot-card">
+
+
+                    <!-- Slot information -->
+
+                    <div class="admin-slot-main">
+
+                        <div class="admin-slot-icon">
+                            ◷
+                        </div>
+
+                        <div class="admin-slot-info">
+
+                            <h2 class="admin-slot-time"
+                                th:text="${slot.startTime + ' - ' + slot.endTime}">
+                                09:00 - 10:00
+                            </h2>
+
+                            <p class="admin-slot-date"
+                               th:text="${slot.slotDate}">
+                                2026-09-05
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Slot status + actions -->
+
+                    <div class="admin-slot-actions">
+
+                        <span th:if="${slot.available}"
+                              class="slot-status slot-status-available">
+
+                            <span class="status-dot"></span>
+                            Available
+
+                        </span>
+
+                        <span th:unless="${slot.available}"
+                              class="slot-status slot-status-unavailable">
+
+                            <span class="status-dot"></span>
+                            Unavailable
+
+                        </span>
+
+
+                        <a th:href="@{/admin/slots/edit/{id}(id=${slot.slotId})}"
+                           class="slot-edit-button">
+
+                            Edit
+                            <span>→</span>
+
+                        </a>
+
+
+                        <form th:action="@{/admin/slots/delete/{id}(id=${slot.slotId})}"
+                              method="post">
+
+                            <input type="hidden"
+                                   name="facilityId"
+                                   th:value="${facility.facilityId}">
+
+                            <button type="submit"
+                                    class="slot-delete-button">
+
+                                Delete
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 Back Link
+                 ========================= -->
+
+            <a th:href="@{/admin/facilities}"
+               class="admin-back-link">
+
+                <span>←</span>
+                <span>Back to Facilities</span>
+
+            </a>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

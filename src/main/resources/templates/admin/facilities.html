@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Facilities — SocietyHub</title>
+
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/admin-facilities.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <a href="/admin/dashboard" class="brand">
+            <div class="brand-mark">S</div>
+            <span class="brand-name">SocietyHub</span>
+        </a>
+
+        <nav class="nav">
+
+            <a href="/admin/dashboard" class="nav-link">
+                <span class="nav-icon">▦</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/admin/facilities" class="nav-link active">
+                <span class="nav-icon">□</span>
+                <span>Facilities</span>
+            </a>
+
+            <a href="/bookings" class="nav-link">
+                <span class="nav-icon">▤</span>
+                <span>Bookings</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/users/logout" class="nav-link">
+                <span class="nav-icon">↪</span>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Topbar -->
+        <header class="topbar">
+
+            <strong>Manage Facilities</strong>
+
+            <div class="user-area">
+
+                <span class="user-avatar">A</span>
+
+                <span class="user-name"
+                      th:text="${userName}">
+                    Administrator
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- Page -->
+        <div class="page-content admin-facilities-page">
+
+            <!-- Page Header -->
+            <section class="page-header">
+
+                <p class="eyebrow">
+                    ADMINISTRATION
+                </p>
+
+                <h1 class="page-title">
+                    Facilities
+                </h1>
+
+                <p class="page-subtitle">
+                    Add, edit and remove society facilities.
+                </p>
+
+            </section>
+
+
+            <!-- Toolbar -->
+            <div class="facility-toolbar">
+
+                <a href="/admin/facilities/new"
+                   class="admin-primary-button">
+
+                    <span class="button-plus">+</span>
+                    <span>Add Facility</span>
+
+                </a>
+
+            </div>
+
+
+            <!-- Facility List -->
+            <div class="facility-list">
+
+                <!-- Facility Card -->
+                <div th:each="facility : ${facilities}"
+                     class="facility-card">
+
+
+                    <!-- Facility Information -->
+                    <div class="facility-card-main">
+
+                        <div class="facility-icon">
+
+                            <svg viewBox="0 0 24 24"
+                                 aria-hidden="true">
+
+                                <rect x="7"
+                                      y="7"
+                                      width="10"
+                                      height="10"
+                                      rx="1.5">
+                                </rect>
+
+                            </svg>
+
+                        </div>
+
+
+                        <div class="facility-info">
+
+                            <h2 class="facility-name"
+                                th:text="${facility.facilityName}">
+                                Community Hall
+                            </h2>
+
+                            <p class="facility-description"
+                               th:text="${facility.description}">
+                                Spacious hall suitable for meetings,
+                                celebrations, and social events.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Actions -->
+                    <div class="facility-actions">
+
+                        <!-- Manage Slots -->
+                        <a th:href="@{/admin/slots(facilityId=${facility.facilityId})}"
+                           class="admin-primary-button">
+
+                            Manage Slots →
+
+                        </a>
+
+
+                        <!-- Edit -->
+                        <a th:href="@{/admin/facilities/edit/{id}(id=${facility.facilityId})}"
+                           class="facility-edit-button">
+
+                            <span>Edit</span>
+                            <span>→</span>
+
+                        </a>
+
+
+                        <!-- Delete -->
+                        <form th:action="@{/admin/facilities/delete/{id}(id=${facility.facilityId})}"
+                              method="post">
+
+                            <button type="submit"
+                                    class="facility-delete-button">
+
+                                Delete
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Empty State -->
+                <div th:if="${#lists.isEmpty(facilities)}"
+                     class="facility-empty-state">
+
+                    <div class="empty-icon">
+                        □
+                    </div>
+
+                    <h2>No facilities yet</h2>
+
+                    <p>
+                        Add your first society facility to make it
+                        available to residents.
+                    </p>
+
+                    <a href="/admin/facilities/new"
+                       class="admin-primary-button">
+
+                        + Add Facility
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Back -->
+            <a href="/admin/dashboard"
+               class="admin-back-link">
+
+                <span>←</span>
+                <span>Back to Dashboard</span>
+
+            </a>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

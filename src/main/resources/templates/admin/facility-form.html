@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${formTitle} + ' — SocietyHub'">
+        Facility — SocietyHub
+    </title>
+
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/admin-facility-form.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <a href="/admin/dashboard" class="brand">
+            <div class="brand-mark">S</div>
+            <span class="brand-name">SocietyHub</span>
+        </a>
+
+        <nav class="nav">
+
+            <a href="/admin/dashboard" class="nav-link">
+                <span class="nav-icon">▦</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/admin/facilities" class="nav-link active">
+                <span class="nav-icon">□</span>
+                <span>Facilities</span>
+            </a>
+
+            <a href="/bookings" class="nav-link">
+                <span class="nav-icon">▤</span>
+                <span>Bookings</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/users/logout" class="nav-link">
+                <span class="nav-icon">↪</span>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Topbar -->
+        <header class="topbar">
+
+            <strong th:text="${formTitle}">
+                Add Facility
+            </strong>
+
+            <div class="user-area">
+
+                <span class="user-avatar">
+                    A
+                </span>
+
+                <span
+                        class="user-name"
+                        th:text="${userName}">
+                    Administrator
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- Page -->
+        <div class="page-content admin-facility-form-page">
+
+            <!-- Header -->
+            <section class="page-header">
+
+                <p class="eyebrow">
+                    FACILITY MANAGEMENT
+                </p>
+
+                <h1
+                        class="page-title"
+                        th:text="${formTitle}">
+                    Add Facility
+                </h1>
+
+                <p class="page-subtitle">
+                    Enter the facility information below.
+                </p>
+
+            </section>
+
+
+            <!-- Form Card -->
+            <section class="facility-form-card">
+
+                <form
+                        th:action="${formAction}"
+                        method="post"
+                        class="facility-form">
+
+
+                    <!-- Facility Name -->
+                    <div class="form-field">
+
+                        <label for="facilityName">
+                            Facility Name
+                        </label>
+
+                        <input
+                                id="facilityName"
+                                type="text"
+                                name="facilityName"
+                                th:value="${facility.facilityName}"
+                                placeholder="e.g. Community Hall"
+                                maxlength="255"
+                                required>
+
+                    </div>
+
+
+                    <!-- Description -->
+                    <div class="form-field">
+
+                        <label for="description">
+                            Description
+                        </label>
+
+                        <textarea
+                                id="description"
+                                name="description"
+                                rows="5"
+                                maxlength="500"
+                                placeholder="Describe the facility and how residents can use it."
+                                required
+                                th:text="${facility.description}"></textarea>
+
+                    </div>
+
+
+                    <!-- Actions -->
+                    <div class="form-actions">
+
+                        <a
+                                href="/admin/facilities"
+                                class="secondary-form-button">
+                            Cancel
+                        </a>
+
+                        <button
+                                type="submit"
+                                class="admin-submit-button">
+
+                            <span th:text="${formTitle}">
+                                Save Facility
+                            </span>
+
+                            <span class="submit-arrow">
+                                →
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+
+            <!-- Back -->
+            <a
+                    href="/admin/facilities"
+                    class="admin-back-link">
+
+                <span>←</span>
+                <span>Back to Facilities</span>
+
+            </a>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

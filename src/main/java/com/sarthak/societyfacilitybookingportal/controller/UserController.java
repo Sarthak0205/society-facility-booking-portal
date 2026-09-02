@@ -1,6 +1,7 @@
 package com.sarthak.societyfacilitybookingportal.controller;
 
 import com.sarthak.societyfacilitybookingportal.entity.User;
+import com.sarthak.societyfacilitybookingportal.entity.UserRole;
 import com.sarthak.societyfacilitybookingportal.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -67,6 +68,11 @@ public class UserController {
 
         session.setAttribute("userId", user.getId());
         session.setAttribute("userName", user.getFullName());
+        session.setAttribute("userRole", user.getRole());
+
+        if (user.getRole() == UserRole.ADMIN) {
+            return "redirect:/admin/dashboard";
+        }
 
         return "redirect:/facilities";
     }

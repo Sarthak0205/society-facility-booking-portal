@@ -4,7 +4,7 @@ import com.sarthak.societyfacilitybookingportal.entity.User;
 import com.sarthak.societyfacilitybookingportal.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import com.sarthak.societyfacilitybookingportal.entity.UserRole;
 @Service
 public class UserService {
 
@@ -57,6 +57,7 @@ public class UserService {
 
         // Store only the BCrypt hash, never the plain-text password.
         user.setPassword(passwordEncoder.encode(password));
+        user.setRole(UserRole.RESIDENT);
 
         userRepository.save(user);
 

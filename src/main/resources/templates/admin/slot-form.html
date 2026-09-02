@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${formTitle} + ' — SocietyHub'">
+        Slot — SocietyHub
+    </title>
+
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/admin-slot-form.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- =========================
+         Sidebar
+         ========================= -->
+
+    <aside class="sidebar">
+
+        <a href="/admin/dashboard" class="brand">
+            <div class="brand-mark">S</div>
+            <span class="brand-name">SocietyHub</span>
+        </a>
+
+        <nav class="nav">
+
+            <a href="/admin/dashboard"
+               class="nav-link">
+
+                <span class="nav-icon">▦</span>
+                <span>Dashboard</span>
+
+            </a>
+
+            <a href="/admin/facilities"
+               class="nav-link">
+
+                <span class="nav-icon">□</span>
+                <span>Facilities</span>
+
+            </a>
+
+            <a th:href="@{/admin/slots(facilityId=${selectedFacilityId})}"
+               class="nav-link active">
+
+                <span class="nav-icon">◷</span>
+                <span>Slots</span>
+
+            </a>
+
+            <a href="/bookings"
+               class="nav-link">
+
+                <span class="nav-icon">▤</span>
+                <span>Bookings</span>
+
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/users/logout"
+               class="nav-link">
+
+                <span class="nav-icon">↪</span>
+                <span>Logout</span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         Main Content
+         ========================= -->
+
+    <main class="main-content">
+
+        <!-- Topbar -->
+
+        <header class="topbar">
+
+            <strong th:text="${formTitle}">
+                Add Slot
+            </strong>
+
+            <div class="user-area">
+
+                <span class="user-avatar">A</span>
+
+                <span class="user-name">
+                    Administrator
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- Page -->
+
+        <div class="page-content slot-form-page">
+
+            <!-- Header -->
+
+            <section class="page-header">
+
+                <p class="eyebrow">
+                    SLOT MANAGEMENT
+                </p>
+
+                <h1 class="page-title"
+                    th:text="${formTitle}">
+                    Add Slot
+                </h1>
+
+                <p class="page-subtitle">
+                    Enter the slot information below.
+                </p>
+
+            </section>
+
+
+            <!-- Form Card -->
+
+            <section class="slot-form-card">
+
+                <form th:action="${formAction}"
+                      method="post">
+
+
+                    <!-- Facility -->
+
+                    <div class="form-field">
+
+                        <label for="facilityId">
+                            Facility
+                        </label>
+
+                        <select id="facilityId"
+                                name="facilityId"
+                                required>
+
+                            <option
+                                    th:each="facility : ${facilities}"
+                                    th:value="${facility.facilityId}"
+                                    th:selected="${facility.facilityId == selectedFacilityId}"
+                                    th:text="${facility.facilityName}">
+                                Community Hall
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Date -->
+
+                    <div class="form-field">
+
+                        <label for="slotDate">
+                            Date
+                        </label>
+
+                        <input
+                                id="slotDate"
+                                type="date"
+                                name="slotDate"
+                                th:value="${slot.slotDate}"
+                                required>
+
+                    </div>
+
+
+                    <!-- Time -->
+
+                    <div class="time-fields">
+
+                        <div class="form-field">
+
+                            <label for="startTime">
+                                Start Time
+                            </label>
+
+                            <input
+                                    id="startTime"
+                                    type="time"
+                                    name="startTime"
+                                    th:value="${slot.startTime}"
+                                    required>
+
+                        </div>
+
+
+                        <div class="form-field">
+
+                            <label for="endTime">
+                                End Time
+                            </label>
+
+                            <input
+                                    id="endTime"
+                                    type="time"
+                                    name="endTime"
+                                    th:value="${slot.endTime}"
+                                    required>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Availability -->
+
+                    <div class="availability-field">
+
+                        <label class="availability-option">
+
+                            <input
+                                    type="checkbox"
+                                    name="available"
+                                    value="true"
+                                    th:checked="${slot.available}">
+
+                            <span class="availability-checkbox"></span>
+
+                            <span class="availability-text">
+
+                                <strong>
+                                    Slot is available
+                                </strong>
+
+                                <small>
+                                    Residents can book this slot.
+                                </small>
+
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- Actions -->
+
+                    <div class="form-actions">
+
+                        <a
+                                th:href="@{/admin/slots(facilityId=${selectedFacilityId})}"
+                                class="cancel-button">
+
+                            Cancel
+
+                        </a>
+
+                        <button
+                                type="submit"
+                                class="save-slot-button">
+
+                            <span th:text="${formTitle}">
+                                Add Slot
+                            </span>
+
+                            <span class="button-arrow">
+                                →
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+
+            <!-- Back -->
+
+            <a
+                    th:href="@{/admin/slots(facilityId=${selectedFacilityId})}"
+                    class="admin-back-link">
+
+                <span>←</span>
+                <span>Back to Slots</span>
+
+            </a>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

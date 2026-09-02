@@ -5,129 +5,143 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Create Account - Society Facility Booking Portal</title>
+    <title>Create Account — SocietyHub</title>
 
-    <link rel="stylesheet"
-          href="/css/register.css">
+    <link rel="stylesheet" href="/css/register.css">
 </head>
 
 <body>
 
-<div class="register-card">
+<div class="auth-page">
 
-    <!-- Logo -->
-    <div class="logo">
-        🏢
-    </div>
+    <div class="auth-card">
 
-    <!-- Heading -->
-    <h1 class="title">
-        Society Facility<br>
-        Booking Portal
-    </h1>
-
-    <p class="subtitle">
-        Create your resident account
-    </p>
-
-    <!-- Success Message -->
-    <div th:if="${success}"
-         class="alert alert-success"
-         th:text="${success}">
-    </div>
-
-    <!-- Error Message -->
-    <div th:if="${error}"
-         class="alert alert-danger"
-         th:text="${error}">
-    </div>
-
-    <!-- Registration Form -->
-    <form action="/users/register"
-          method="post">
-
-        <!-- Full Name -->
-        <div class="form-group">
-            <div class="input-wrapper">
-
-                <span class="input-icon">👤</span>
-
-                <input type="text"
-                       class="form-control"
-                       name="fullName"
-                       placeholder="Full Name"
-                       required>
-
-            </div>
+        <!-- Brand -->
+        <div class="brand">
+            <div class="brand-mark">S</div>
+            <span class="brand-name">SocietyHub</span>
         </div>
 
-        <!-- Email -->
-        <div class="form-group">
-            <div class="input-wrapper">
+        <!-- Heading -->
+        <div class="auth-header">
 
-                <span class="input-icon">✉</span>
+            <p class="eyebrow">
+                RESIDENT PORTAL
+            </p>
 
-                <input type="email"
-                       class="form-control"
-                       name="email"
-                       placeholder="Email Address"
-                       required>
+            <h1>
+                Create your account.
+            </h1>
 
-            </div>
+            <p>
+                Register to manage your society bookings.
+            </p>
+
         </div>
 
-        <!-- Password -->
-        <div class="form-group">
-            <div class="input-wrapper">
-
-                <span class="input-icon">🔒</span>
-
-                <input type="password"
-                       class="form-control"
-                       name="password"
-                       placeholder="Password"
-                       minlength="6"
-                       required>
-
-            </div>
+        <!-- Success -->
+        <div th:if="${success}"
+             class="alert alert-success"
+             th:text="${success}">
         </div>
 
-        <!-- Confirm Password -->
-        <div class="form-group">
-            <div class="input-wrapper">
-
-                <span class="input-icon">🛡</span>
-
-                <input type="password"
-                       class="form-control"
-                       name="confirmPassword"
-                       placeholder="Confirm Password"
-                       required>
-
-            </div>
+        <!-- Error -->
+        <div th:if="${error}"
+             class="alert alert-error"
+             th:text="${error}">
         </div>
 
-        <!-- Register Button -->
-        <button type="submit"
-                class="register-btn">
-            👤+ Register
-        </button>
+        <!-- Registration -->
+        <form action="/users/register"
+              method="post"
+              class="auth-form">
 
-    </form>
+            <div class="form-group">
 
-    <!-- Sign In -->
-    <div class="divider">
-        <span>Already have an account?</span>
+                <label for="fullName">
+                    Full name
+                </label>
+
+                <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        placeholder="Your full name"
+                        autocomplete="name"
+                        required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email address
+                </label>
+
+                <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Create a password"
+                        minlength="6"
+                        autocomplete="new-password"
+                        required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="confirmPassword">
+                    Confirm password
+                </label>
+
+                <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        placeholder="Re-enter your password"
+                        autocomplete="new-password"
+                        required>
+
+            </div>
+
+            <button type="submit">
+                Create Account
+                <span>→</span>
+            </button>
+
+        </form>
+
+        <!-- Login -->
+        <div class="register-section">
+
+            <span>
+                Already have an account?
+            </span>
+
+            <a href="/users/login">
+                Sign In
+            </a>
+
+        </div>
+
     </div>
-
-    <p class="signin-text">
-        Sign in to continue
-    </p>
-
-    <a href="#"
-       class="signin-link">
-        Sign In
-    </a>
 
 </div>
 
