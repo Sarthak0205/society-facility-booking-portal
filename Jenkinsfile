@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        SOCIETYHUB_TEST_EMAIL = credentials('societyhub-test-user')
+    }
+
     stages {
 
         stage('Checkout') {
@@ -11,7 +15,11 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh '/opt/homebrew/bin/mvn clean test'
+                sh '''
+                    /opt/homebrew/bin/mvn clean test \
+                        -Dtest.email="$SOCIETYHUB_TEST_EMAIL_USR" \
+                        -Dtest.password="$SOCIETYHUB_TEST_EMAIL_PSW"
+                '''
             }
         }
 
