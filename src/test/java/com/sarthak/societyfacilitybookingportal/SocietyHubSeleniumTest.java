@@ -48,25 +48,23 @@ class SocietyHubSeleniumTest {
         // 2. Wait for successful login
         wait.until(ExpectedConditions.urlContains("/facilities"));
 
+        // 3. Open a facility with test slots
         driver.get("http://localhost:8081/slots?facilityId=7&date=2026-09-05");
 
-        // 5. Wait for slots page
-        wait.until(ExpectedConditions.urlContains("/slots"));
-
-        // 6. Select an available slot
+        // 4. Select an available slot
         wait.until(ExpectedConditions.elementToBeClickable(
                 By.cssSelector("a.slot-card")
         )).click();
 
-        // 7. Wait for booking page
+        // 5. Wait for booking page
         wait.until(ExpectedConditions.urlContains("/booking"));
 
-        // 8. Confirm booking
+        // 6. Confirm booking
         wait.until(ExpectedConditions.elementToBeClickable(
                 By.cssSelector(".confirm-booking-button")
         )).click();
 
-        // 9. Verify booking submission
+        // 7. Verify booking submission
         WebElement successMessage = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(
                         By.cssSelector(".success-header .page-title")
@@ -74,8 +72,50 @@ class SocietyHubSeleniumTest {
         );
 
         assertTrue(
-                successMessage.getText().contains("Your booking request is submitted.")
+                successMessage.getText().contains(
+                        "Your booking request is submitted."
+                )
         );
+
+        // 8. Capture the newly created booking ID
+        String bookingId = driver.findElement(
+                By.cssSelector(".booking-id strong")
+        ).getText();
+
+        // 9. Open My Bookings
+        driver.get("http://localhost:8081/bookings");
+
+        // 10. Find the exact booking that was just created
+        WebElement bookingCard = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.cssSelector(
+                                ".booking-card[data-booking-id='" + bookingId + "']"
+                        )
+                )
+        );
+
+        // 11. Cancel the same booking
+        bookingCard.findElement(
+                By.cssSelector(".cancel-button")
+        ).click();
+
+        // 12. Wait for the bookings page to reload
+        wait.until(ExpectedConditions.urlContains("/bookings"));
+
+        // 13. Verify the booking is cancelled
+        By cancelledStatusLocator = By.cssSelector(
+                ".booking-card[data-booking-id='" + bookingId + "'] .status"
+        );
+
+        wait.until(driver -> {
+            try {
+                WebElement element = driver.findElement(cancelledStatusLocator);
+                return element.isDisplayed()
+                        && element.getText().trim().equals("CANCELLED");
+            } catch (org.openqa.selenium.StaleElementReferenceException e) {
+                return false;
+            }
+        });
     }
     @AfterEach
     void tearDown() {

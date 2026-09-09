@@ -109,7 +109,8 @@
            class="booking-list">
 
         <article th:each="booking : ${bookings}"
-                 class="booking-card">
+                 class="booking-card"
+                 th:attr="data-booking-id=${booking.bookingId}">
 
           <!-- Card Header -->
           <div class="booking-card-header">
