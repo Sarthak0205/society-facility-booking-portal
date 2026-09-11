@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         SOCIETYHUB_TEST_EMAIL = credentials('societyhub-test-user')
+        PATH = "/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
     }
 
     stages {
@@ -10,6 +11,20 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
+            }
+        }
+        stage('Docker Check') {
+            steps {
+                sh '''
+                    echo "Docker path:"
+                    which docker
+
+                    echo "Docker version:"
+                    /usr/local/bin/docker --version
+
+                    echo "Docker containers:"
+                    /usr/local/bin/docker ps
+                '''
             }
         }
 
