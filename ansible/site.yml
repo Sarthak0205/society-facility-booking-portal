@@ -1,0 +1,84 @@
+---
+- name: Provision SocietyHub Docker Environment
+  hosts: local
+  connection: local
+  gather_facts: false
+
+  tasks:
+
+    - name: Verify Docker is available
+      ansible.builtin.command: docker --version
+      register: docker_version
+      changed_when: false
+
+    - name: Display Docker version
+      ansible.builtin.debug:
+        msg: "{{ docker_version.stdout }}"
+
+    - name: Create SocietyHub Docker network
+      community.docker.docker_network:
+        name: societyhub-network
+        state: present
+
+    - name: Deploy and verify SocietyHub
+      block:
+
+        - name: Deploy intentionally faulty SocietyHub configuration
+          community.docker.docker_container:
+            name: societyhub
+            image: societyhub:13
+            state: started
+            restart_policy: unless-stopped
+            ports:
+              - "8081:8081"
+            env:
+              SPRING_DATASOURCE_URL: "jdbc:mysql://host.docker.internal:3306/society_booking"
+              SPRING_DATASOURCE_USERNAME: "root"
+              SPRING_DATASOURCE_PASSWORD: "wrong-password"
+            networks:
+              - name: societyhub-network
+
+        - name: Wait for SocietyHub health check
+          ansible.builtin.uri:
+            url: http://localhost:8081/facilities
+            method: GET
+            status_code: 200
+          register: health_check
+          retries: 5
+          delay: 3
+          until: health_check.status == 200
+
+      rescue:
+
+        - name: Roll back SocietyHub to known-good configuration
+          community.docker.docker_container:
+            name: societyhub
+            image: societyhub:13
+            state: started
+            restart_policy: unless-stopped
+            ports:
+              - "8081:8081"
+            env:
+              SPRING_DATASOURCE_URL: "jdbc:mysql://host.docker.internal:3306/society_booking"
+              SPRING_DATASOURCE_USERNAME: "root"
+              SPRING_DATASOURCE_PASSWORD: "{{ lookup('env', 'SOCIETYHUB_DB_PASSWORD') }}"
+            networks:
+              - name: societyhub-network
+
+        - name: Wait for SocietyHub after rollback
+          ansible.builtin.uri:
+            url: http://localhost:8081/facilities
+            method: GET
+            status_code: 200
+          register: rollback_health
+          retries: 10
+          delay: 3
+          until: rollback_health.status == 200
+
+        - name: Display rollback result
+          ansible.builtin.debug:
+            msg: "Rollback successful. SocietyHub is healthy again."
+
+    - name: Display final deployment status
+      ansible.builtin.debug:
+        msg: "SocietyHub deployment completed successfully."
