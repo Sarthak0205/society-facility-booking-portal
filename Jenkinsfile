@@ -1,4 +1,5 @@
 pipeline {
+// W10: Jenkins continuous testing verification
     agent any
 
     environment {
