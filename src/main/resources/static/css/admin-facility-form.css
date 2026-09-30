@@ -67,7 +67,8 @@
 }
 
 .form-field input,
-.form-field textarea {
+.form-field textarea,
+.form-field select {
     width: 100%;
 
     box-sizing: border-box;
@@ -93,7 +94,8 @@
         box-shadow 0.15s ease;
 }
 
-.form-field input {
+.form-field input,
+.form-field select {
     height: 48px;
 }
 

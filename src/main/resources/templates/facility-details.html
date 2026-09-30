@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title th:text="${facility.facilityName} + ' — Facility Details — SocietyHub'">Facility Details — SocietyHub</title>
+
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/facility-details.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+
+    <a href="/facilities" class="brand">
+      <div class="brand-mark">S</div>
+      <span class="brand-name">SocietyHub</span>
+    </a>
+
+    <nav class="nav">
+
+      <a href="/facilities" class="nav-link active">
+        <span class="nav-icon">▦</span>
+        <span>Facilities</span>
+      </a>
+
+      <a href="/bookings" class="nav-link">
+        <span class="nav-icon">▤</span>
+        <span>My Bookings</span>
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <a href="/users/logout" class="nav-link">
+        <span class="nav-icon">↪</span>
+        <span>Logout</span>
+      </a>
+
+    </div>
+
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Topbar -->
+    <header class="topbar">
+
+      <div>
+        <strong>Facility Details</strong>
+      </div>
+
+      <div class="user-area">
+        <span class="user-avatar">S</span>
+        <span class="user-name" th:text="${userName != null ? userName : 'Resident'}">Resident</span>
+      </div>
+
+    </header>
+
+    <!-- Page -->
+    <div class="page-content facility-details-page">
+
+      <a href="/facilities" class="back-link">
+        ← Back to Facilities
+      </a>
+
+      <section class="page-header">
+
+        <p class="eyebrow"
+           th:text="'SOCIETY FACILITY · ' + ${facility.category != null ? facility.category.displayName : 'GENERAL'}">
+          SOCIETY FACILITY
+        </p>
+
+        <div class="facility-title-row">
+          <h1 class="page-title" th:text="${facility.facilityName}">
+            Community Hall
+          </h1>
+
+          <span class="status-badge"
+                th:classappend="${facility.status != null and facility.status.name() == 'MAINTENANCE' ? 'status-maintenance' : 'status-active'}"
+                th:text="${facility.status != null ? facility.status.displayName : 'Active'}">
+            Active
+          </span>
+        </div>
+
+        <p class="page-subtitle" th:text="${facility.description}">
+          Spacious hall suitable for meetings, celebrations, and social events.
+        </p>
+
+      </section>
+
+      <!-- Specifications Card -->
+      <section class="facility-overview-card">
+
+        <h2 class="overview-heading">Facility Information</h2>
+
+        <div class="details-grid">
+
+          <div class="detail-tile">
+            <span class="detail-tile-label">📍 Location</span>
+            <span class="detail-tile-value"
+                  th:text="${facility.location != null and !facility.location.isEmpty() ? facility.location : 'Clubhouse'}">
+              Clubhouse, Ground Floor
+            </span>
+          </div>
+
+          <div class="detail-tile">
+            <span class="detail-tile-label">👥 Maximum Capacity</span>
+            <span class="detail-tile-value"
+                  th:text="${facility.capacity != null ? facility.capacity + ' persons' : 'N/A'}">
+              150 persons
+            </span>
+          </div>
+
+          <div class="detail-tile">
+            <span class="detail-tile-label">📐 Floor Area</span>
+            <span class="detail-tile-value"
+                  th:text="${facility.area != null and !facility.area.isEmpty() ? facility.area : 'N/A'}">
+              2500 sq. ft.
+            </span>
+          </div>
+
+          <div class="detail-tile">
+            <span class="detail-tile-label">🏷️ Category</span>
+            <span class="detail-tile-value"
+                  th:text="${facility.category != null ? facility.category.displayName : 'Recreation'}">
+              Event Space
+            </span>
+          </div>
+
+          <div class="detail-tile">
+            <span class="detail-tile-label">⚡ Status</span>
+            <span class="detail-tile-value"
+                  th:text="${facility.status != null ? facility.status.displayName : 'Active'}">
+              Active
+            </span>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Action Section: Maintenance vs Active -->
+      <section class="action-card maintenance-card"
+               th:if="${facility.status != null and facility.status.name() == 'MAINTENANCE'}">
+
+        <div class="maintenance-notice">
+          <div class="maintenance-icon" aria-hidden="true">⚠️</div>
+          <div>
+            <h2 class="maintenance-title">Under Maintenance</h2>
+            <p class="maintenance-desc">
+              This facility is currently under maintenance. Slot bookings are temporarily disabled for residents.
+              Please check back later or contact the society office for updates.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="action-card"
+               th:unless="${facility.status != null and facility.status.name() == 'MAINTENANCE'}">
+
+        <div class="booking-action-content">
+
+          <div class="booking-prompt">
+            <h2>Book a Time Slot</h2>
+            <p>
+              Check real-time slot availability for today or future dates and make your reservation.
+            </p>
+          </div>
+
+          <a th:href="@{/slots(facilityId=${facility.facilityId},date=${selectedDate})}"
+             class="primary-slots-button">
+            <span>View Available Slots</span>
+            <span class="arrow">→</span>
+          </a>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+</div>
+
+</body>
+</html>

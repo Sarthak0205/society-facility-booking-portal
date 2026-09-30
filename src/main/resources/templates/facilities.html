@@ -30,7 +30,7 @@
         <span>Facilities</span>
       </a>
 
-      <a href="/bookings?userId=1" class="nav-link">
+      <a href="/bookings" class="nav-link">
         <span class="nav-icon">▤</span>
         <span>My Bookings</span>
       </a>
@@ -60,7 +60,7 @@
 
       <div class="user-area">
         <span class="user-avatar">S</span>
-        <span class="user-name">Resident</span>
+        <span class="user-name" th:text="${userName != null ? userName : 'Resident'}">Resident</span>
       </div>
 
     </header>
@@ -103,11 +103,20 @@
            class="facility-grid">
 
         <a th:each="facility : ${facilities}"
-           th:href="@{/slots(facilityId=${facility.facilityId},date=${selectedDate})}"
+           th:href="@{/facilities/{id}(id=${facility.facilityId})}"
            class="facility-card">
 
-          <div class="facility-icon">
-            <span>◆</span>
+          <div class="facility-card-top">
+            <span class="category-badge"
+                  th:text="${facility.category != null ? facility.category.displayName : 'Facility'}">
+              Sports
+            </span>
+
+            <span class="status-badge"
+                  th:classappend="${facility.status != null and facility.status.name() == 'MAINTENANCE' ? 'status-maintenance' : 'status-active'}"
+                  th:text="${facility.status != null ? facility.status.displayName : 'Active'}">
+              Active
+            </span>
           </div>
 
           <div class="facility-card-body">
@@ -120,17 +129,34 @@
               Facility description
             </p>
 
+            <div class="facility-meta">
+              <span class="meta-chip" th:if="${facility.location != null and !facility.location.isEmpty()}">
+                <span aria-hidden="true">📍</span>
+                <span th:text="${facility.location}">Clubhouse</span>
+              </span>
+
+              <span class="meta-chip" th:if="${facility.capacity != null}">
+                <span aria-hidden="true">👥</span>
+                <span th:text="'Max ' + ${facility.capacity} + ' people'">Max 30 people</span>
+              </span>
+
+              <span class="meta-chip" th:if="${facility.area != null and !facility.area.isEmpty()}">
+                <span aria-hidden="true">📐</span>
+                <span th:text="${facility.area}">2500 sq. ft.</span>
+              </span>
+            </div>
+
           </div>
 
           <div class="facility-card-footer">
 
-                        <span>
-                            View available slots
-                        </span>
+            <span>
+              View Details
+            </span>
 
             <span class="arrow">
-                            →
-                        </span>
+              →
+            </span>
 
           </div>
 

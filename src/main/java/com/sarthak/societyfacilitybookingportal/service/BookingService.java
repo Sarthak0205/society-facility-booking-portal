@@ -2,6 +2,7 @@ package com.sarthak.societyfacilitybookingportal.service;
 
 import com.sarthak.societyfacilitybookingportal.entity.Booking;
 import com.sarthak.societyfacilitybookingportal.entity.BookingStatus;
+import com.sarthak.societyfacilitybookingportal.entity.FacilityStatus;
 import com.sarthak.societyfacilitybookingportal.entity.Slot;
 import com.sarthak.societyfacilitybookingportal.entity.User;
 import com.sarthak.societyfacilitybookingportal.repository.BookingRepository;
@@ -27,6 +28,12 @@ public class BookingService {
 
     @Transactional
     public Booking createBooking(User user, Slot slot) {
+
+        if (slot.getFacility() != null && slot.getFacility().getStatus() == FacilityStatus.MAINTENANCE) {
+            throw new IllegalStateException(
+                    "This facility is currently under maintenance and cannot be booked."
+            );
+        }
 
         if (!slot.isAvailable()) {
             throw new IllegalStateException(

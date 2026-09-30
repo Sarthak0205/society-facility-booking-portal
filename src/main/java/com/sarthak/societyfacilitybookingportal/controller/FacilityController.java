@@ -1,10 +1,12 @@
 package com.sarthak.societyfacilitybookingportal.controller;
 
+import com.sarthak.societyfacilitybookingportal.entity.Facility;
 import com.sarthak.societyfacilitybookingportal.service.FacilityService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 
@@ -46,5 +48,24 @@ public class FacilityController {
         );
 
         return "facilities";
+    }
+
+    @GetMapping("/facilities/{id}")
+    public String viewFacilityDetails(
+            @PathVariable Long id,
+            HttpSession session,
+            Model model) {
+
+        if (session.getAttribute("userId") == null) {
+            return "redirect:/users/login";
+        }
+
+        Facility facility = facilityService.getFacilityById(id);
+
+        model.addAttribute("facility", facility);
+        model.addAttribute("selectedDate", LocalDate.now());
+        model.addAttribute("userName", session.getAttribute("userName"));
+
+        return "facility-details";
     }
 }
