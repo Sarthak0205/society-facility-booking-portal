@@ -4,6 +4,7 @@ import com.sarthak.societyfacilitybookingportal.entity.Facility;
 import com.sarthak.societyfacilitybookingportal.entity.Slot;
 import com.sarthak.societyfacilitybookingportal.repository.FacilityRepository;
 import com.sarthak.societyfacilitybookingportal.repository.SlotRepository;
+import com.sarthak.societyfacilitybookingportal.repository.BookingRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,13 +16,16 @@ public class SlotService {
 
     private final SlotRepository slotRepository;
     private final FacilityRepository facilityRepository;
+    private final BookingRepository bookingRepository;
 
     public SlotService(
             SlotRepository slotRepository,
-            FacilityRepository facilityRepository) {
+            FacilityRepository facilityRepository,
+            BookingRepository bookingRepository) {
 
         this.slotRepository = slotRepository;
         this.facilityRepository = facilityRepository;
+        this.bookingRepository = bookingRepository;
     }
 
     /*
@@ -136,6 +140,12 @@ public class SlotService {
         Slot slot = slotRepository.findById(slotId)
                 .orElseThrow(() ->
                         new IllegalArgumentException("Slot not found"));
+
+        if (bookingRepository.existsBySlotSlotId(slotId)) {
+            throw new IllegalStateException(
+                    "This slot cannot be deleted because it has booking history."
+            );
+        }
 
         slotRepository.delete(slot);
     }

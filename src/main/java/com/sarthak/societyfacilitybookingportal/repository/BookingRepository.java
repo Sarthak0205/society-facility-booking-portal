@@ -15,4 +15,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findByStatusOrderByBookingIdDesc(
             BookingStatus status
     );
+
+    boolean existsBySlotSlotId(Long slotId);
 }

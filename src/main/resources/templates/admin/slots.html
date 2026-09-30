@@ -133,9 +133,33 @@
             </section>
 
 
+            </section>
+
+            <!-- Delete/operation messages -->
+
+            <div th:if="${success}"
+                 style="padding: 12px 16px;
+                        margin-bottom: 16px;
+                        border-radius: 8px;
+                        background: #e8f5e9;
+                        color: #2e7d32;">
+                <span th:text="${success}"></span>
+            </div>
+
+            <div th:if="${error}"
+                 style="padding: 12px 16px;
+                        margin-bottom: 16px;
+                        border-radius: 8px;
+                        background: #ffebee;
+                        color: #c62828;">
+                <span th:text="${error}"></span>
+            </div>
+
+
             <!-- =========================
                  Facility Context
                  ========================= -->
+
 
             <div class="facility-context">
 

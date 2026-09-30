@@ -49,7 +49,7 @@ class SocietyHubSeleniumTest {
         wait.until(ExpectedConditions.urlContains("/facilities"));
 
         // 3. Open a facility with test slots
-        driver.get("http://localhost:8081/slots?facilityId=7&date=2026-09-05");
+        driver.get("http://localhost:8081/slots?facilityId=7&date=2026-10-13");
 
         // 4. Select an available slot
         wait.until(ExpectedConditions.elementToBeClickable(

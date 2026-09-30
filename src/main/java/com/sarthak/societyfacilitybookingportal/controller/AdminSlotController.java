@@ -10,7 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -245,13 +245,28 @@ public class AdminSlotController {
     public String deleteSlot(
             @PathVariable Long id,
             @RequestParam Long facilityId,
-            HttpSession session) {
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
 
         if (!isAdmin(session)) {
             return "redirect:/facilities";
         }
 
-        slotService.deleteSlot(id);
+        try {
+            slotService.deleteSlot(id);
+
+            redirectAttributes.addFlashAttribute(
+                    "success",
+                    "Slot deleted successfully."
+            );
+
+        } catch (IllegalStateException e) {
+
+            redirectAttributes.addFlashAttribute(
+                    "error",
+                    e.getMessage()
+            );
+        }
 
         return "redirect:/admin/slots?facilityId=" + facilityId;
     }
