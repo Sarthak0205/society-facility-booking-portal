@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/bookings")
@@ -48,13 +49,18 @@ public class AdminBookingController {
     @PostMapping("/confirm/{id}")
     public String confirmBooking(
             @PathVariable Long id,
-            HttpSession session) {
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
 
         if (!isAdmin(session)) {
             return "redirect:/facilities";
         }
 
-        bookingService.confirmBooking(id);
+        try {
+            bookingService.confirmBooking(id);
+        } catch (IllegalStateException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
 
         return "redirect:/admin/bookings";
     }

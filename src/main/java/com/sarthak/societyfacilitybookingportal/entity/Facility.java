@@ -118,4 +118,9 @@ public class Facility {
     public void setStatus(FacilityStatus status) {
         this.status = status;
     }
+
+    public boolean isGymnasium() {
+        return (facilityId != null && facilityId == 8L)
+                || (facilityName != null && (facilityName.trim().equalsIgnoreCase("Gymnasium") || facilityName.trim().toLowerCase().contains("gymnasium")));
+    }
 }

@@ -45,6 +45,9 @@ public class BookingController {
 
         if (slot.getFacility() != null && slot.getFacility().getStatus() == com.sarthak.societyfacilitybookingportal.entity.FacilityStatus.MAINTENANCE) {
             model.addAttribute("error", "This facility is currently under maintenance.");
+        } else if (slot.getFacility() != null && slot.getFacility().isGymnasium()
+                && bookingService.isGymnasiumSlotFull(slot, slot.getSlotDate())) {
+            model.addAttribute("error", "This Gymnasium slot is full.");
         } else if (!slot.isAvailable()) {
             model.addAttribute("error", "This slot is no longer available.");
         }
@@ -78,17 +81,28 @@ public class BookingController {
             return "booking";
         }
 
+        if (slot.getFacility() != null && slot.getFacility().isGymnasium()
+                && bookingService.isGymnasiumSlotFull(slot, slot.getSlotDate())) {
+            model.addAttribute("error", "This Gymnasium slot is full.");
+            model.addAttribute("slot", slot);
+            return "booking";
+        }
+
         if (!slot.isAvailable()) {
             model.addAttribute("error", "This slot is no longer available.");
             model.addAttribute("slot", slot);
             return "booking";
         }
 
-        Booking booking = bookingService.createBooking(user, slot);
-
-        model.addAttribute("booking", booking);
-
-        return "booking-success";
+        try {
+            Booking booking = bookingService.createBooking(user, slot);
+            model.addAttribute("booking", booking);
+            return "booking-success";
+        } catch (IllegalStateException e) {
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("slot", slot);
+            return "booking";
+        }
     }
 
     @GetMapping("/bookings")

@@ -129,6 +129,69 @@
     font-size: 13px;
 }
 
+.facility-capacity-badge {
+    display: inline-block;
+    margin: 4px 0 12px;
+    padding: 4px 12px;
+    background: var(--brand-soft);
+    color: var(--brand-dark);
+    border: 1px solid #ddd2ff;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.slot-occupancy {
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.slot-spots-available {
+    color: #15803d;
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.slot-spots-full {
+    color: #dc2626;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.slot-card-full {
+    background: #f9fafb;
+    border-color: #e5e7eb;
+    cursor: not-allowed;
+    opacity: 0.85;
+}
+
+.slot-card-full:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: #e5e7eb;
+}
+
+.slot-icon-full {
+    background: #f3f4f6;
+    color: #9ca3af;
+    border-color: #e5e7eb;
+}
+
+.slot-card-full:hover .slot-icon-full {
+    background: #f3f4f6;
+    color: #9ca3af;
+    transform: none;
+}
+
+.slot-action-unavailable {
+    color: #9ca3af;
+    font-weight: 700;
+    font-size: 13px;
+}
+
 /* Right side */
 
 .slot-action {

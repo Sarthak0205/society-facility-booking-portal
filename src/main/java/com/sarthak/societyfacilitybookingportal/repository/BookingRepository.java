@@ -4,6 +4,7 @@ import com.sarthak.societyfacilitybookingportal.entity.Booking;
 import com.sarthak.societyfacilitybookingportal.entity.BookingStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
@@ -17,4 +18,10 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     );
 
     boolean existsBySlotSlotId(Long slotId);
+
+    long countBySlotSlotIdAndBookingDateAndStatus(
+            Long slotId,
+            LocalDate bookingDate,
+            BookingStatus status
+    );
 }

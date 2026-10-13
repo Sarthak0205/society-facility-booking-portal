@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "slots")
@@ -28,6 +29,15 @@ public class Slot {
 
     @Column(nullable = false)
     private boolean available = true;
+
+    @Transient
+    private Integer occupiedCount;
+
+    @Transient
+    private Integer availableCount;
+
+    @Transient
+    private Boolean full;
 
     public Slot() {
     }
@@ -78,5 +88,37 @@ public class Slot {
 
     public void setAvailable(boolean available) {
         this.available = available;
+    }
+
+    public Integer getOccupiedCount() {
+        return occupiedCount != null ? occupiedCount : 0;
+    }
+
+    public void setOccupiedCount(Integer occupiedCount) {
+        this.occupiedCount = occupiedCount;
+    }
+
+    public Integer getAvailableCount() {
+        return availableCount != null ? availableCount : 0;
+    }
+
+    public void setAvailableCount(Integer availableCount) {
+        this.availableCount = availableCount;
+    }
+
+    public boolean isFull() {
+        return full != null && full;
+    }
+
+    public void setFull(boolean full) {
+        this.full = full;
+    }
+
+    public String getFormattedTime() {
+        if (startTime == null || endTime == null) {
+            return "";
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+        return startTime.format(formatter) + " - " + endTime.format(formatter);
     }
 }

@@ -79,6 +79,12 @@
           Swimming Pool
         </h1>
 
+        <div class="facility-capacity-badge"
+             th:if="${facility.isGymnasium() and facility.capacity != null}"
+             th:text="'Capacity: ' + ${facility.capacity}">
+          Capacity: 25
+        </div>
+
         <p class="page-subtitle">
           Choose an available time slot for your selected facility.
         </p>
@@ -136,39 +142,136 @@
               th:unless="${slots.isEmpty()}"
               class="slot-list">
 
-        <a
-                th:each="slot : ${slots}"
-                th:href="@{/booking(slotId=${slot.slotId})}"
-                class="slot-card">
+        <!-- Gymnasium Slots with Dynamic Occupancy -->
+        <th:block th:if="${facility.isGymnasium()}">
 
-          <div class="slot-main">
+          <th:block th:each="slot : ${slots}">
 
-            <div class="slot-icon">
-              ◷
-            </div>
+            <!-- Available Slot -->
+            <a
+                    th:if="${!slot.full}"
+                    th:href="@{/booking(slotId=${slot.slotId})}"
+                    class="slot-card">
 
-            <div>
+              <div class="slot-main">
 
-              <div
-                      class="slot-time"
-                      th:text="${slot.startTime + ' - ' + slot.endTime}">
-                09:00 - 10:00
+                <div class="slot-icon">
+                  ◷
+                </div>
+
+                <div>
+
+                  <div
+                          class="slot-time"
+                          th:text="${slot.formattedTime}">
+                    06:00 PM - 07:00 PM
+                  </div>
+
+                  <div
+                          class="slot-occupancy"
+                          th:text="${slot.occupiedCount + ' / ' + (facility.capacity != null ? facility.capacity : 25) + ' booked'}">
+                    18 / 25 booked
+                  </div>
+
+                  <div
+                          class="slot-spots-available"
+                          th:text="${slot.availableCount + (slot.availableCount == 1 ? ' spot available' : ' spots available')}">
+                    7 spots available
+                  </div>
+
+                </div>
+
               </div>
 
-              <div class="slot-label">
-                Available for booking
+              <div class="slot-action">
+                <span>Book Now</span>
+                <span class="arrow">→</span>
+              </div>
+
+            </a>
+
+            <!-- Full Slot -->
+            <div
+                    th:if="${slot.full}"
+                    class="slot-card slot-card-full"
+                    aria-disabled="true">
+
+              <div class="slot-main">
+
+                <div class="slot-icon slot-icon-full">
+                  ◷
+                </div>
+
+                <div>
+
+                  <div
+                          class="slot-time"
+                          th:text="${slot.formattedTime}">
+                    06:00 PM - 07:00 PM
+                  </div>
+
+                  <div
+                          class="slot-occupancy"
+                          th:text="${slot.occupiedCount + ' / ' + (facility.capacity != null ? facility.capacity : 25) + ' booked'}">
+                    25 / 25 booked
+                  </div>
+
+                  <div class="slot-spots-full">
+                    FULL
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="slot-action slot-action-unavailable">
+                <span>Unavailable</span>
               </div>
 
             </div>
 
-          </div>
+          </th:block>
 
-          <div class="slot-action">
-            <span>Book</span>
-            <span class="arrow">→</span>
-          </div>
+        </th:block>
 
-        </a>
+        <!-- Standard Non-Gymnasium Facility Slots -->
+        <th:block th:unless="${facility.isGymnasium()}">
+
+          <a
+                  th:each="slot : ${slots}"
+                  th:href="@{/booking(slotId=${slot.slotId})}"
+                  class="slot-card">
+
+            <div class="slot-main">
+
+              <div class="slot-icon">
+                ◷
+              </div>
+
+              <div>
+
+                <div
+                        class="slot-time"
+                        th:text="${slot.startTime + ' - ' + slot.endTime}">
+                  09:00 - 10:00
+                </div>
+
+                <div class="slot-label">
+                  Available for booking
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="slot-action">
+              <span>Book</span>
+              <span class="arrow">→</span>
+            </div>
+
+          </a>
+
+        </th:block>
 
       </div>
 

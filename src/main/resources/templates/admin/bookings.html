@@ -369,6 +369,13 @@
 
             </section>
 
+            <!-- Error Banner -->
+            <div th:if="${error}"
+                 class="admin-error-banner"
+                 style="background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; padding: 14px 18px; border-radius: 10px; margin-bottom: 24px; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 18px;">⚠️</span>
+                <span th:text="${error}">This Gymnasium slot is full.</span>
+            </div>
 
             <!-- Empty State -->
 
