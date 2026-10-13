@@ -16,4 +16,6 @@ public interface SlotRepository extends JpaRepository<Slot, Long> {
     List<Slot> findByFacilityFacilityIdOrderBySlotDateAscStartTimeAsc(
             Long facilityId
     );
+
+    boolean existsByFacilityFacilityId(Long facilityId);
 }

@@ -43,7 +43,9 @@ public class BookingController {
         Slot slot = slotRepository.findById(slotId)
                 .orElseThrow(() -> new IllegalArgumentException("Slot not found"));
 
-        if (!slot.isAvailable()) {
+        if (slot.getFacility() != null && slot.getFacility().getStatus() == com.sarthak.societyfacilitybookingportal.entity.FacilityStatus.MAINTENANCE) {
+            model.addAttribute("error", "This facility is currently under maintenance.");
+        } else if (!slot.isAvailable()) {
             model.addAttribute("error", "This slot is no longer available.");
         }
 
@@ -69,6 +71,12 @@ public class BookingController {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        if (slot.getFacility() != null && slot.getFacility().getStatus() == com.sarthak.societyfacilitybookingportal.entity.FacilityStatus.MAINTENANCE) {
+            model.addAttribute("error", "This facility is currently under maintenance.");
+            model.addAttribute("slot", slot);
+            return "booking";
+        }
 
         if (!slot.isAvailable()) {
             model.addAttribute("error", "This slot is no longer available.");

@@ -134,6 +134,77 @@
                     </div>
 
 
+                    <!-- Category and Status Row -->
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+
+                        <div class="form-field">
+                            <label for="category">Category</label>
+                            <select id="category" name="category" required>
+                                <option th:each="cat : ${categories}"
+                                        th:value="${cat}"
+                                        th:text="${cat.displayName}"
+                                        th:selected="${facility.category == cat}">
+                                    Recreation
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="status">Status</label>
+                            <select id="status" name="status" required>
+                                <option th:each="st : ${statuses}"
+                                        th:value="${st}"
+                                        th:text="${st.displayName}"
+                                        th:selected="${facility.status == st}">
+                                    Active
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Capacity and Area Row -->
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+
+                        <div class="form-field">
+                            <label for="capacity">Maximum Capacity (Occupancy)</label>
+                            <input
+                                    id="capacity"
+                                    type="number"
+                                    name="capacity"
+                                    min="1"
+                                    th:value="${facility.capacity}"
+                                    placeholder="e.g. 150">
+                        </div>
+
+                        <div class="form-field">
+                            <label for="area">Floor Area</label>
+                            <input
+                                    id="area"
+                                    type="text"
+                                    name="area"
+                                    th:value="${facility.area}"
+                                    placeholder="e.g. 2500 sq. ft."
+                                    maxlength="255">
+                        </div>
+
+                    </div>
+
+
+                    <!-- Location -->
+                    <div class="form-field">
+                        <label for="location">Location</label>
+                        <input
+                                id="location"
+                                type="text"
+                                name="location"
+                                th:value="${facility.location}"
+                                placeholder="e.g. Clubhouse, Ground Floor"
+                                maxlength="255">
+                    </div>
+
+
                     <!-- Description -->
                     <div class="form-field">
 

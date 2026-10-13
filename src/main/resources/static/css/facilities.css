@@ -93,24 +93,67 @@
     box-shadow: var(--shadow-md);
 }
 
+/* Facility card header */
+
+.facility-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.category-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 9px;
+    border-radius: var(--radius-sm);
+    background: var(--brand-soft);
+    color: var(--brand);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.status-badge.status-active {
+    background: #e6f4ea;
+    color: #137333;
+}
+
+.status-badge.status-maintenance {
+    background: #fef7e0;
+    color: #b06000;
+}
+
 /* Facility icon */
 
 .facility-icon {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    margin-bottom: 22px;
+    margin-bottom: 14px;
 
-    border-radius: 14px;
+    border-radius: 12px;
 
-    background: var(--primary-light);
-    color: var(--primary-dark);
+    background: var(--brand-soft);
+    color: var(--brand);
 
-    font-size: 25px;
+    font-size: 22px;
     font-weight: 700;
 }
 
@@ -119,22 +162,45 @@
 }
 
 .facility-card h2 {
-    margin: 0 0 8px;
+    margin: 0 0 6px;
 
     color: var(--text);
 
-    font-size: 18px;
+    font-size: 17px;
     line-height: 1.3;
     font-weight: 700;
 }
 
 .facility-card p {
-    margin: 0;
+    margin: 0 0 14px;
 
     color: var(--text-muted);
 
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Facility Meta Chips */
+
+.facility-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 10px;
+}
+
+.meta-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    background: var(--page-bg);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 600;
 }
 
 /* Footer */

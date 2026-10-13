@@ -1,0 +1,185 @@
+/* =========================================
+   SocietyHub — Facility Details
+   ========================================= */
+
+.facility-details-page {
+    max-width: 900px;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 24px;
+    color: var(--brand);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.15s ease;
+}
+
+.back-link:hover {
+    transform: translateX(-3px);
+}
+
+.facility-title-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+    margin-bottom: 12px;
+}
+
+.facility-details-page .page-title {
+    margin: 0;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.status-badge.status-active {
+    background: #e6f4ea;
+    color: #137333;
+}
+
+.status-badge.status-maintenance {
+    background: #fef7e0;
+    color: #b06000;
+    border: 1px solid #f9ab00;
+}
+
+.facility-overview-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    margin-top: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.overview-heading {
+    margin: 0 0 16px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.detail-tile {
+    background: var(--page-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.detail-tile-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--text-muted);
+}
+
+.detail-tile-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+/* Action card */
+
+.action-card {
+    margin-top: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.action-card.maintenance-card {
+    background: #fffdf5;
+    border-color: #f9ab00;
+}
+
+.maintenance-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.maintenance-icon {
+    font-size: 28px;
+    line-height: 1;
+}
+
+.maintenance-title {
+    margin: 0 0 6px;
+    color: #b06000;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.maintenance-desc {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.booking-action-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.booking-prompt h2 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.booking-prompt p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.primary-slots-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 22px;
+    background: var(--brand);
+    color: #ffffff;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.primary-slots-button:hover {
+    background: var(--brand-dark);
+    transform: translateY(-1px);
+}

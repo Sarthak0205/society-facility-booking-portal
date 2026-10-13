@@ -1,5 +1,7 @@
 package com.sarthak.societyfacilitybookingportal.controller;
 
+import com.sarthak.societyfacilitybookingportal.entity.Facility;
+import com.sarthak.societyfacilitybookingportal.entity.FacilityStatus;
 import com.sarthak.societyfacilitybookingportal.service.FacilityService;
 import com.sarthak.societyfacilitybookingportal.service.SlotService;
 import jakarta.servlet.http.HttpSession;
@@ -37,6 +39,12 @@ public class SlotController {
             return "redirect:/users/login";
         }
 
+        Facility facility = facilityService.getFacilityById(facilityId);
+
+        if (facility.getStatus() == FacilityStatus.MAINTENANCE) {
+            return "redirect:/facilities/" + facilityId;
+        }
+
         model.addAttribute(
                 "slots",
                 slotService.getAvailableSlots(facilityId, date)
@@ -44,7 +52,7 @@ public class SlotController {
 
         model.addAttribute(
                 "facility",
-                facilityService.getFacilityById(facilityId)
+                facility
         );
 
         model.addAttribute("selectedDate", date);
